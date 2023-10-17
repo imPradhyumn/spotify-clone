@@ -9,6 +9,8 @@ import { BiSearch } from "react-icons/bi";
 import Box from "./Box";
 import SideBarItem from "./SideBarItem";
 import Library from "./Library/Library";
+import { useDispatch } from "react-redux";
+import { setAuthState } from "@/redux/reducers/authSlice";
 
 interface SideBarProps {
   children: React.ReactNode;
@@ -16,6 +18,10 @@ interface SideBarProps {
 
 const SideBarProps: React.FC<SideBarProps> = ({ children }) => {
   const pathName = usePathname();
+
+  const dispatch = useDispatch();
+
+  dispatch(setAuthState(true));
 
   const routes = useMemo(
     () => [

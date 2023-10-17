@@ -11,6 +11,7 @@ import Button from "./Button";
 import useAuthModal from "@/hooks/useAuthModal";
 import axios from "axios";
 
+import { AppDispatch } from "@/redux/store";
 import { useSelector, useDispatch } from "react-redux";
 import { setAuthState } from "@/redux/reducers/authSlice";
 import { RootState } from "@/redux/store";
@@ -26,7 +27,15 @@ const Header: React.FC<HeaderProps> = ({ children, className }) => {
   const dispatch = useDispatch();
   const { onOpen } = useAuthModal();
 
-  const isUserAuthenticated = false;
+  const isUserAuthenticated = useSelector(
+    (state: RootState) => state.auth.isAuthenticated
+  );
+
+  // useEffect(() => {
+  //   axios
+  //     .get("http://localhost:3000/api/user/login")
+  //     .then((res) => dispatch(setAuthState(res.data.isAuthenticated)));
+  // }, []);
 
   const logout = async () => {
     axios

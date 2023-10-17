@@ -1,6 +1,8 @@
 "use client";
 
-import { createSlice } from "@reduxjs/toolkit";
+import { LOGIN_COOKIE } from "@/constants";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 
 export interface AuthState {
   isAuthenticated: boolean;
