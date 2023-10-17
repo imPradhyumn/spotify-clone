@@ -6,12 +6,13 @@ interface PlaylistProps {
   className?: string;
 }
 
-const Playlists: React.FC<PlaylistProps> = ({ children }) => {
+const PlayLists: React.FC<PlaylistProps> = ({ children }) => {
   return (
-    <div className="px-6">
+    <React.Fragment>
       <PlayList name={"Recently Played"} />
-    </div>
+      <PlayList name={"Spotify Playlist"} />
+    </React.Fragment>
   );
 };
 
-export default Playlists;
+export default PlayLists;

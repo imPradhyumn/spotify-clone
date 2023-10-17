@@ -7,7 +7,17 @@ const config: Config = {
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        card: "rgba(28,28,28)",
+        cardHover: "rgba(36,36,36)",
+        spotifyGreen: "#1ed760",
+        "header-bg": "#111111",
+      },
+      aspectRatio: {
+        "6/9": "5 / 2",
+      },
+    },
   },
   plugins: [],
 };

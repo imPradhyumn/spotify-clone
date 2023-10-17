@@ -8,7 +8,7 @@ import { BiSearch } from "react-icons/bi";
 
 import Box from "./Box";
 import SideBarItem from "./SideBarItem";
-import Library from "./Library";
+import Library from "./Library/Library";
 
 interface SideBarProps {
   children: React.ReactNode;

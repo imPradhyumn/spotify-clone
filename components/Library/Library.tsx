@@ -2,6 +2,8 @@ import React from "react";
 
 import { HiPlus } from "react-icons/hi";
 import { TbPlaylist } from "react-icons/tb";
+import AddPodcasts from "./AddPodcasts";
+import CreatePlayList from "./CreatePlayList";
 
 const Library = () => {
   const onClick = () => {};
@@ -22,7 +24,10 @@ const Library = () => {
         />
       </div>
 
-      <div className="flex flex-col gap-y-4 px-3 mt-4">List of Songs</div>
+      <div className="flex flex-col gap-y-4 px-3 mt-4">
+        <AddPodcasts />
+        <CreatePlayList />
+      </div>
     </div>
   );
 };
