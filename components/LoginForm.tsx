@@ -19,20 +19,25 @@ const LoginForm = ({ closeModal }: { closeModal: () => void }) => {
     setUserCredentials((prev) => ({ ...prev, [ele.name]: ele.value }));
   };
 
-  const authenticateUser = () => {
+  const authenticateUser = (e: React.ChangeEvent) => {
+    e.preventDefault();
     axios
       .post("http://localhost:3000/api/user/login", {
         email: "prabhat@gmail.com",
-        password: "123456",
+        password: "12345",
       })
       .then((res) => {
-        dispatch(setAuthState(true));
-        closeModal();
+        if (!res.data.isAuthenticated) {
+          console.log("Wrong Password");
+          closeModal();
+        }
+        dispatch(setAuthState(res.data.isAuthenticated));
       })
       .catch((err) => console.log("Login Err: ", err));
   };
 
-  const signUp = () => {
+  const signUp = (e: React.ChangeEvent) => {
+    e.preventDefault();
     axios
       .post("http://localhost:3000/api/user/signup", {
         name: "Prabhat",
@@ -89,13 +94,14 @@ const LoginForm = ({ closeModal }: { closeModal: () => void }) => {
 
       <div className="w-36">
         <button
-          onClick={() => signUp()}
+          type="submit"
+          onClick={(e) => signUp(e)}
           className="box-border w-full text-black shadow-blackA4 hover:bg-mauve3 inline-flex h-[35px] items-center justify-center rounded-[4px] bg-white px-[15px] font-medium leading-none shadow-[0_2px_10px] focus:shadow-[0_0_0_2px] focus:shadow-black focus:outline-none mt-[15px]"
         >
           Sign Up
         </button>
         <button
-          onClick={() => authenticateUser()}
+          onClick={(e) => authenticateUser(e)}
           className="box-border w-full text-black shadow-blackA4 hover:bg-mauve3 inline-flex h-[35px] items-center justify-center rounded-[4px] bg-white px-[15px] font-medium leading-none shadow-[0_2px_10px] focus:shadow-[0_0_0_2px] focus:shadow-black focus:outline-none mt-[15px]"
         >
           Log In

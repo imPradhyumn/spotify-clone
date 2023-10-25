@@ -59,6 +59,8 @@ class UserService implements IUserService {
     const { password: storedPassword } = this.user;
     const res = await bcrypt.compare(inputPassword, storedPassword);
 
+    console.log(res);
+
     if (res) return (isAuthenticated = true);
     return isAuthenticated;
   }

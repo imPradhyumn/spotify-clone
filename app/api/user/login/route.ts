@@ -30,9 +30,6 @@ export async function POST(req: Request) {
       value: "IAmAwesome",
       path: "/",
     });
-
-    return new Response(JSON.stringify({ response: "Login Successful" }));
   }
-
-  return new Response(JSON.stringify({ response: "Login Failed" }));
+  return new Response(JSON.stringify({ isAuthenticated: false }));
 }

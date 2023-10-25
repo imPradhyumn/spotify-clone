@@ -15,3 +15,31 @@ body,
   background-color: black;
   color-scheme: dark;
 }
+
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+  background: transparent;
+  height: 100% !important;
+  border-radius: 12px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Override default look */
+  appearance: none;
+  height: 0.8rem;
+  width: 0.8rem;
+  border: none;
+  border-radius: 50%;
+  background-color: white;
+  margin-top: -4px;
+}
+
+/* input[type="range"]::-webkit-slider-thumb:hover {
+  display: block;
+} */

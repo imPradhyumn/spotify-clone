@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useRouter } from "next/navigation";
 
 import { RxCaretLeft, RxCaretRight } from "react-icons/rx";
@@ -11,7 +11,6 @@ import Button from "./Button";
 import useAuthModal from "@/hooks/useAuthModal";
 import axios from "axios";
 
-import { AppDispatch } from "@/redux/store";
 import { useSelector, useDispatch } from "react-redux";
 import { setAuthState } from "@/redux/reducers/authSlice";
 import { RootState } from "@/redux/store";
@@ -47,12 +46,15 @@ const Header: React.FC<HeaderProps> = ({ children, className }) => {
   };
 
   return (
-    <div className="h-fit px-5 py-2 mb-4 bg-header-bg">
+    <div className="sticky top-0 z-[999] h-fit px-5 py-2 mb-4 bg-header-bg rounded-lg">
       <div className="w-full flex items-center justify-between">
         <div
           className="hidden
           md:flex
-          gap-x-2 items-center"
+          gap-x-2 items-center
+          flex-grow
+          flex-shrink
+          max-w-[28rem]"
         >
           <button
             onClick={() => router.back()}
@@ -66,6 +68,9 @@ const Header: React.FC<HeaderProps> = ({ children, className }) => {
           >
             <RxCaretRight size={35} />
           </button>
+
+          {/* Search Bar */}
+          {children}
         </div>
 
         {/* Mobile View */}

@@ -1,4 +1,4 @@
-import { connect, ConnectOptions } from "mongoose";
+import { connect, ConnectOptions, models } from "mongoose";
 
 interface IConnectOptions extends ConnectOptions {
   useNewUrlParser: boolean;
@@ -15,7 +15,10 @@ const connection = { isConnected: false };
 const dbConnect = async () => {
   const dbUrl: string = process.env.DB_URL || "";
 
-  if (connection.isConnected) return;
+  if (connection.isConnected) {
+    console.log("DB already connected!!");
+    return;
+  }
 
   try {
     const response = await connect(dbUrl, connectOptions);

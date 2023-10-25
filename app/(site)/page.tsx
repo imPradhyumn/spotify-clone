@@ -1,5 +1,7 @@
 import Header from "@/components/Header";
+import Player from "@/components/Player/Player";
 import PlayLists from "@/components/PlayList/PlayLists";
+import React from "react";
 
 export default function Home() {
   return (

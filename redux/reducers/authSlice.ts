@@ -1,8 +1,6 @@
 "use client";
 
-import { LOGIN_COOKIE } from "@/constants";
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import { createSlice } from "@reduxjs/toolkit";
 
 export interface AuthState {
   isAuthenticated: boolean;
@@ -17,6 +15,7 @@ export const authSlice = createSlice({
   initialState,
   reducers: {
     setAuthState(state, action) {
+      console.log("Hello", action.payload);
       state.isAuthenticated = action.payload;
     },
   },

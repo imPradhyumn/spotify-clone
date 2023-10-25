@@ -5,6 +5,7 @@ import SideBar from "../components/SideBar";
 import ModalProvider from "@/providers/ModalProvider";
 import Providers from "@/redux/Provider";
 import SessionProvider from "@/providers/SessionProvider";
+import Player from "@/components/Player/Player";
 
 // import { setAuthState } from "./reducers/authSlice";
 
@@ -27,6 +28,7 @@ export default function RootLayout({
           <SessionProvider>
             <ModalProvider />
             <SideBar>{children}</SideBar>
+            <Player />
           </SessionProvider>
         </Providers>
       </body>
