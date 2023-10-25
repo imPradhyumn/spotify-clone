@@ -19,7 +19,7 @@ const LoginForm = ({ closeModal }: { closeModal: () => void }) => {
     setUserCredentials((prev) => ({ ...prev, [ele.name]: ele.value }));
   };
 
-  const authenticateUser = (e: React.ChangeEvent) => {
+  const authenticateUser = (e: any) => {
     e.preventDefault();
     axios
       .post("http://localhost:3000/api/user/login", {
@@ -36,7 +36,7 @@ const LoginForm = ({ closeModal }: { closeModal: () => void }) => {
       .catch((err) => console.log("Login Err: ", err));
   };
 
-  const signUp = (e: React.ChangeEvent) => {
+  const signUp = (e: any) => {
     e.preventDefault();
     axios
       .post("http://localhost:3000/api/user/signup", {
