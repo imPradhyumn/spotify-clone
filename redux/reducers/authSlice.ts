@@ -1,6 +1,6 @@
 "use client";
 
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 export interface AuthState {
   isAuthenticated: boolean;
@@ -15,7 +15,6 @@ export const authSlice = createSlice({
   initialState,
   reducers: {
     setAuthState(state, action) {
-      console.log("Hello", action.payload);
       state.isAuthenticated = action.payload;
     },
   },

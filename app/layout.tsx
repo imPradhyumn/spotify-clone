@@ -1,21 +1,24 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Figtree } from "next/font/google";
-import SideBar from "../components/SideBar";
-import ModalProvider from "@/providers/ModalProvider";
-import Providers from "@/redux/Provider";
-import SessionProvider from "@/providers/SessionProvider";
+import StoreProvider from "@/redux/Provider";
 import Player from "@/components/Player/Player";
-import { URL_PREFIX } from "@/constants";
-import axios from "axios";
-// import { setAuthState } from "./reducers/authSlice";
+import React from "react";
+import Container from "@/components/Container";
+import dbConnect from "@/db/database";
+import { cookies } from "next/headers";
+import { LOGIN_COOKIE } from "@/constants";
 
 const font = Figtree({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Spotify",
+  title: "Spotify-Clone",
   description: "An Spotify Clone",
 };
+
+async function checkLoginStatus() {
+  return cookies().has(LOGIN_COOKIE);
+}
 
 export default async function RootLayout({
   children,
@@ -24,25 +27,16 @@ export default async function RootLayout({
 }) {
   // Connect to DB as soon as land on search page
 
-  axios
-    .get(URL_PREFIX + "/search")
-    .then((res) => {
-      console.log(res);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  await dbConnect();
+  const loginStatus: boolean = await checkLoginStatus();
 
   return (
     <html lang="en">
       <body className={font.className}>
-        <Providers>
-          <SessionProvider>
-            <ModalProvider />
-            <SideBar>{children}</SideBar>
-            <Player />
-          </SessionProvider>
-        </Providers>
+        <StoreProvider loginStatus={loginStatus}>
+          {children}
+          <Player />
+        </StoreProvider>
       </body>
     </html>
   );

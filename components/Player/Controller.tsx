@@ -1,83 +1,34 @@
 "use client";
 
-import React, { useEffect, useLayoutEffect, useMemo, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { BiPlay, BiPause } from "react-icons/bi";
 import { AiFillStepForward, AiFillStepBackward } from "react-icons/ai";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
-import { millisToMinutes } from "@/utilities/millisToMinutes";
+import { SlLoop } from "react-icons/sl";
+import { RxShuffle } from "react-icons/rx";
+import ProgressBar from "./ProgressBar";
 
-interface ProgressBarProps {
-  player: HTMLAudioElement | null;
-  togglePlayer: () => void;
-  currentDisplayTime: number;
-}
+let interval: number = 0; //setInterval function return value;
 
-let interval: number = 0; //setInterval return value;
-
-const mapTimeRangeToPercentage = (
+export const mapTimeRangeToPercentage = (
   currentTime: number,
   duration: number = 0
 ) => {
   return (100 * (currentTime - 0)) / (duration - 0);
 };
 
-const progressBar: React.FC<ProgressBarProps> = ({
-  player,
-  currentDisplayTime,
-  togglePlayer,
-}) => {
-  const duration = player?.duration;
-
-  const onRangeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (player) {
-      player.currentTime = parseInt(e.target.value);
-
-      const divElement = document.getElementById(
-        "slider-pseudo-element"
-      ) as HTMLElement;
-
-      const newWidth = mapTimeRangeToPercentage(player.currentTime, duration);
-      divElement.style.width = newWidth + "%";
-
-      // if range equals end time of song then stop song play
-      if (player.currentTime == Math.round(duration ?? 0)) {
-        clearInterval(interval);
-        togglePlayer();
-      }
-    }
-  };
-
-  return (
-    <div className="flex items-center gap-x-2">
-      <span className="text-xs">{millisToMinutes(currentDisplayTime)}</span>
-
-      <div className="relative w-[20rem] h-[0.25rem] bg-neutral-700 rounded-2xl">
-        <div
-          id="slider-pseudo-element"
-          className="absolute z-[99] w-0 h-full rounded-2xl bg-green-500"
-        ></div>
-        <input
-          type="range"
-          id="song-progress-range"
-          className="absolute z-[999] w-full h-full"
-          min={0}
-          max={duration}
-          defaultValue={0}
-          onChange={onRangeChange}
-        />
-      </div>
-      <span className="text-xs">{millisToMinutes(duration)}</span>
-    </div>
-  );
-};
-
 const Controller = () => {
   const [isSongPlaying, setIsSongPlaying] = useState(false);
   const [player, setPlayer] = useState<HTMLAudioElement | null>(null);
   const [currentDisplayTime, setCurrentDisplayTime] = useState(0);
+  const [repeatSong, setRepeatSong] = useState(true);
 
   let currentSongSrc = useSelector((state: RootState) => state.currentSong.url);
+
+  const rangeInputElementRef = useRef<any>(null);
+  const progressBarElementRef = useRef<any>(null);
+  const audioPlayerRef = useRef<any>(null);
 
   if (currentSongSrc === "") {
     currentSongSrc = "/songs/main-rang-sharbaton-ka.mp3";
@@ -92,40 +43,42 @@ const Controller = () => {
     setIsSongPlaying((prev) => !prev);
   };
 
-  const songProgressEffect = (reset: boolean = false) => {
-    const divElement = document.getElementById(
-      "slider-pseudo-element"
-    ) as HTMLElement;
+  const resetPlayer = () => {
+    if (!repeatSong) setIsSongPlaying(false);
 
-    const rangeInput = document.getElementById(
-      "song-progress-range"
-    ) as HTMLInputElement;
+    setCurrentDisplayTime(0);
+    progressBarElementRef.current.style.width = "0";
+    rangeInputElementRef.current.value = "0";
+  };
 
-    if (reset) {
-      divElement.style.width = "0";
-      rangeInput.value = "0";
-      return;
-    }
-
+  const songProgressEffect = () => {
     const currentTime = player?.currentTime ?? 0;
     const duration = player?.duration ?? 0;
 
+    //Map [0-endTime] into percentage [0-100] to use this val for progress-bar width
     const newWidth = mapTimeRangeToPercentage(currentTime, duration);
 
-    //Map [0-endTime] into percentage [0-100] to use this val for div width
-    divElement.style.width = newWidth + "%";
-    rangeInput.value = Math.round(currentTime).toString();
+    progressBarElementRef.current.style.width = newWidth + "%";
+    rangeInputElementRef.current.value = Math.round(currentTime).toString();
+
+    //check if songs comes to end
+    if (Math.round(currentTime) == Math.round(player?.duration ?? 0) - 1)
+      resetPlayer();
   };
+
+  useEffect(() => {
+    setPlayer(document.getElementById("audio-player") as HTMLAudioElement);
+  }, []);
 
   // Change song audio 'src' everytime new song is selected
   useEffect(() => {
-    setCurrentDisplayTime(0);
-    songProgressEffect(true);
+    resetPlayer();
 
-    const ele = document.getElementById("audio-source") as HTMLSourceElement;
-    ele.src = currentSongSrc;
-    player?.load();
-    togglePlayer();
+    if (player) {
+      player.src = currentSongSrc;
+      player?.load();
+      player?.play();
+    }
   }, [currentSongSrc]);
 
   useEffect(() => {
@@ -136,9 +89,6 @@ const Controller = () => {
         setCurrentDisplayTime((prev) => prev + 1);
       }, 1000);
     } else window.clearInterval(interval);
-
-    // Grab audio element everytime page renders else it will get null
-    setPlayer(document.getElementById("audio-player") as HTMLAudioElement);
 
     return () => {
       window.clearInterval(interval);
@@ -152,17 +102,19 @@ const Controller = () => {
         <audio
           controls
           id="audio-player"
-        >
-          <source
-            id="audio-source"
-            type="audio/mpeg"
-            src={currentSongSrc}
-          />
-        </audio>
+          ref={audioPlayerRef}
+          src={currentSongSrc}
+          loop={repeatSong}
+        ></audio>
       </div>
 
       <div className="flex flex-col items-center gap-y-2 py-2">
         <div className="flex items-center gap-x-4">
+          <RxShuffle
+            className="text-neutral-400 hover:text-white"
+            size={16}
+            title="Shuffle"
+          />
           <AiFillStepBackward size={28} />
 
           <button
@@ -184,13 +136,25 @@ const Controller = () => {
           </button>
 
           <AiFillStepForward size={28} />
+          <SlLoop
+            className={
+              repeatSong
+                ? "text-green-500"
+                : "text-neutral-400 hover:text-white"
+            }
+            size={16}
+            title="Loop"
+            onClick={() => setRepeatSong((prev) => !prev)}
+          />
         </div>
 
-        {progressBar({
-          player,
-          currentDisplayTime,
-          togglePlayer,
-        })}
+        <ProgressBar
+          player={player}
+          currentDisplayTime={currentDisplayTime}
+          setCurrentDisplayTime={setCurrentDisplayTime}
+          rangeInputElementRef={rangeInputElementRef}
+          progressBarElementRef={progressBarElementRef}
+        />
       </div>
     </React.Fragment>
   );

@@ -4,7 +4,7 @@ import React from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { IoMdPlay } from "react-icons/io";
-import PlayButton from "../PlayButton";
+import PlayButton from "../common/PlayButton";
 
 interface PlayListItemProps {
   name: string;
@@ -12,7 +12,7 @@ interface PlayListItemProps {
   url: string;
 }
 
-const PlayListItem: React.FC<PlayListItemProps> = ({ image, name, url }) => {
+const PlayListCard: React.FC<PlayListItemProps> = ({ image, name, url }) => {
   const router = useRouter();
 
   const handleClick = () => {
@@ -28,6 +28,8 @@ const PlayListItem: React.FC<PlayListItemProps> = ({ image, name, url }) => {
       item-center
       justify-center
       w-[85%]
+      max-w-[15rem]
+      min-w-[12rem]
       h-auto
       p-4
       rounded-lg
@@ -57,4 +59,4 @@ const PlayListItem: React.FC<PlayListItemProps> = ({ image, name, url }) => {
   );
 };
 
-export default PlayListItem;
+export default PlayListCard;

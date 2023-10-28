@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
-import Button from "@/components/Button";
-import PlayButton from "@/components/PlayButton";
+import Button from "@/components/common/Button";
+import PlayButton from "@/components/common/PlayButton";
 import { RootState } from "@/redux/store";
 import { useSelector } from "react-redux";
 import { capitalize } from "@/utilities/captitalize";

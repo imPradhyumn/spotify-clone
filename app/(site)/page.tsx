@@ -1,13 +1,17 @@
+import Container from "@/components/Container";
 import Header from "@/components/Header";
-import Player from "@/components/Player/Player";
-import PlayLists from "@/components/PlayList/PlayLists";
+import PlayLists from "@/components/PlayLists/PlayLists";
+import SideBar from "@/components/SideSection/SideBar";
 import React from "react";
 
-export default function Home() {
+export default function HomeDashboard() {
   return (
-    <div className="h-full w-full bg-neutral-900 rounded-lg overflow-hidden overflow-y-auto">
-      <Header />
-      <PlayLists />
-    </div>
+    <Container>
+      <SideBar />
+      <div className="h-full w-full bg-neutral-900 rounded-lg overflow-hidden overflow-y-auto">
+        <Header />
+        <PlayLists />
+      </div>
+    </Container>
   );
 }

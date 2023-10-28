@@ -1,6 +1,6 @@
 "use client";
 
-import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
+import { configureStore } from "@reduxjs/toolkit";
 import { authReducer } from "./reducers/authSlice";
 import { currentSongReducer } from "./reducers/currentSongSlice";
 import { searchReducer } from "./reducers/searchSlice";
@@ -10,6 +10,11 @@ const store = configureStore({
     auth: authReducer,
     search: searchReducer,
     currentSong: currentSongReducer,
+  },
+  preloadedState: {
+    auth: {
+      isAuthenticated: false,
+    },
   },
   devTools: true,
 });

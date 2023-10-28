@@ -1,6 +1,7 @@
 import UserService, { IUserService } from "@/services/userService";
 import { cookies } from "next/headers";
-import { LOGIN_COOKIE } from "@/constants";
+import { LOGIN_COOKIE, URL_PREFIX } from "@/constants";
+import { NextResponse } from "next/server";
 
 interface LoginCredentials {
   email: string;
@@ -8,28 +9,26 @@ interface LoginCredentials {
 }
 
 export async function GET(req: Request) {
-  const userService: IUserService = new UserService();
-  const isAuthenticated: boolean = userService.getAuthenticationStatus();
-  return new Response(JSON.stringify({ isAuthenticated }));
+  console.log("Hello-1", cookies().has(LOGIN_COOKIE));
+  return new Response(JSON.stringify({ isAuthenticated: false }));
 }
 
 export async function POST(req: Request) {
   const data = await req.json();
-  const cookieStore = cookies();
-  const userService: IUserService = new UserService();
-
   const { email, password }: LoginCredentials = data;
+
+  const userService: IUserService = new UserService();
   const isAuthenticated: boolean = await userService.authenticate(
     email,
     password
   );
 
+  const response = NextResponse.json({ isAuthenticated });
+
   if (isAuthenticated) {
-    cookieStore.set({
-      name: LOGIN_COOKIE,
-      value: "IAmAwesome",
-      path: "/",
-    });
+    response.cookies.set(LOGIN_COOKIE, "iamawesome");
+    return response;
   }
-  return new Response(JSON.stringify({ isAuthenticated: false }));
+
+  return response;
 }

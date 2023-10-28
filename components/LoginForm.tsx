@@ -1,12 +1,13 @@
 "use client";
 
 import React, { useState } from "react";
-import * as Form from "@radix-ui/react-form";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { setAuthState } from "@/redux/reducers/authSlice";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
-const LoginForm = ({ closeModal }: { closeModal: () => void }) => {
+const LoginForm = () => {
   const dispatch = useDispatch();
 
   const [userCredentials, setUserCredentials] = useState({
@@ -19,19 +20,23 @@ const LoginForm = ({ closeModal }: { closeModal: () => void }) => {
     setUserCredentials((prev) => ({ ...prev, [ele.name]: ele.value }));
   };
 
+  const router = useRouter();
+
   const authenticateUser = (e: any) => {
     e.preventDefault();
+
     axios
       .post("http://localhost:3000/api/user/login", {
         email: "prabhat@gmail.com",
-        password: "12345",
+        password: "123456",
       })
       .then((res) => {
         if (!res.data.isAuthenticated) {
-          console.log("Wrong Password");
-          closeModal();
+          alert("Wrong Password");
+          return;
         }
-        dispatch(setAuthState(res.data.isAuthenticated));
+        dispatch(setAuthState(true));
+        router.push("/");
       })
       .catch((err) => console.log("Login Err: ", err));
   };
@@ -49,65 +54,73 @@ const LoginForm = ({ closeModal }: { closeModal: () => void }) => {
   };
 
   return (
-    <Form.Root className="flex flex-col items-center">
-      <Form.Field
-        className="grid mb-[10px] items-center w-60"
-        name="email"
-      >
-        <div className="flex items-baseline justify-between">
-          <Form.Label className="text-[15px] font-medium leading-[35px] text-white">
-            Email
-          </Form.Label>
+    <div className="w-full h-[100vh] bg-neutral-900">
+      <header className=" bg-black py-7 pl-16 font-bold text-3xl">
+        Spotify
+      </header>
+      <div className="flex justify-center w-full mt-8 bg-neutral-900">
+        <div className="flex flex-col items-center gap-y-3 w-[40rem] py-12 px-8 bg-black rounded-lg">
+          <h3 className="text-[3rem] font-semibold">Log in to Spotify</h3>
+          <hr className="bg-white w-4/5 my-5"></hr>
+
+          <form className="flex flex-col gap-y-3 w-1/2">
+            <div className="flex flex-col gap-y-2">
+              <label
+                className="font-bold text-xs"
+                htmlFor="email"
+              >
+                Email or username
+              </label>
+              <input
+                className="h-12 bg-[#121212] p-3 hover:border focus:border-[3px]"
+                type="text"
+                id="email"
+                name="email"
+                placeholder="Email or username"
+                onChange={handleInputChange}
+                value={userCredentials.email}
+              />
+            </div>
+
+            <div className="flex flex-col gap-y-2">
+              <label
+                className="font-bold text-xs"
+                htmlFor="password"
+              >
+                Password
+              </label>
+              <input
+                className="h-12 bg-[#121212] p-3 hover:border focus:border-[3px]"
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Password"
+                onChange={handleInputChange}
+                value={userCredentials.password}
+                autoComplete="on"
+              />
+            </div>
+            <button
+              type="button"
+              onClick={authenticateUser}
+              className="bg-green-500 py-3 font-bold mt-3 text-black border-none outline-none rounded-full"
+            >
+              Login
+            </button>
+          </form>
+          <hr className="bg-white w-4/5 my-5"></hr>
+          <p>
+            Don't have an account?{" "}
+            <Link
+              href="#"
+              className="underline font-semibold"
+            >
+              Sign up for Spotify
+            </Link>
+          </p>
         </div>
-        <Form.Control asChild>
-          <input
-            className="box-border w-full bg-blackA2 shadow-blackA6 inline-flex h-[35px] appearance-none items-center justify-center rounded-[4px] px-[10px] text-[15px] leading-none text-white shadow-[0_0_0_1px] outline-none hover:shadow-[0_0_0_1px_black] focus:shadow-[0_0_0_2px_black] selection:color-white selection:bg-blackA6"
-            type="email"
-            required
-            name="email"
-            onChange={(e) => handleInputChange(e)}
-          />
-        </Form.Control>
-      </Form.Field>
-
-      <Form.Field
-        className="grid mb-[10px] w-60"
-        name="question"
-      >
-        <div className="flex items-baseline justify-between">
-          <Form.Label className="text-[15px] font-medium leading-[35px] text-white">
-            Password
-          </Form.Label>
-        </div>
-
-        <Form.Control asChild>
-          <input
-            className="box-border w-full bg-blackA2 shadow-blackA6 inline-flex h-[35px] appearance-none items-center justify-center rounded-[4px] px-[10px] text-[15px] leading-none text-white shadow-[0_0_0_1px] outline-none hover:shadow-[0_0_0_1px_black] focus:shadow-[0_0_0_2px_black] selection:color-white selection:bg-blackA6"
-            type="password"
-            required
-            name="password"
-            onChange={(e) => handleInputChange(e)}
-            autoComplete="on"
-          />
-        </Form.Control>
-      </Form.Field>
-
-      <div className="w-36">
-        <button
-          type="submit"
-          onClick={(e) => signUp(e)}
-          className="box-border w-full text-black shadow-blackA4 hover:bg-mauve3 inline-flex h-[35px] items-center justify-center rounded-[4px] bg-white px-[15px] font-medium leading-none shadow-[0_2px_10px] focus:shadow-[0_0_0_2px] focus:shadow-black focus:outline-none mt-[15px]"
-        >
-          Sign Up
-        </button>
-        <button
-          onClick={(e) => authenticateUser(e)}
-          className="box-border w-full text-black shadow-blackA4 hover:bg-mauve3 inline-flex h-[35px] items-center justify-center rounded-[4px] bg-white px-[15px] font-medium leading-none shadow-[0_2px_10px] focus:shadow-[0_0_0_2px] focus:shadow-black focus:outline-none mt-[15px]"
-        >
-          Log In
-        </button>
       </div>
-    </Form.Root>
+    </div>
   );
 };
 

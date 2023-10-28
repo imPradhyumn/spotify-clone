@@ -2,12 +2,10 @@ import { connect, ConnectOptions, models } from "mongoose";
 
 interface IConnectOptions extends ConnectOptions {
   useNewUrlParser: boolean;
-  useUnifiedTopology: boolean;
 }
 
 const connectOptions: IConnectOptions = {
   useNewUrlParser: true,
-  useUnifiedTopology: true,
 };
 
 const connection = { isConnected: false };
@@ -21,7 +19,7 @@ const dbConnect = async () => {
   }
 
   try {
-    const response = await connect(dbUrl, connectOptions);
+    await connect(dbUrl, connectOptions);
     connection.isConnected = true;
     console.log("Database connected succesfully!!");
   } catch (err) {

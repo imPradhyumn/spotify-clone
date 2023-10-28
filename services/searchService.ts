@@ -27,9 +27,9 @@ export default class SearchService implements ISearchService {
   artistsList!: IArtist[];
   topArtist!: IArtist[];
 
-  constructor() {
-    dbConnect();
-  }
+  // constructor() {
+  //   dbConnect();
+  // }
 
   async getSearchResults(query: string): Promise<ISearchResult> {
     await this.getSongsByTitle(query);

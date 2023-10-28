@@ -1,5 +1,5 @@
 import React from "react";
-import PlayListItem from "./PlayListItem";
+import PlayListCard from "./PlayListCard";
 
 interface PlayListProps {
   children?: React.ReactNode;
@@ -12,29 +12,30 @@ const PlayList: React.FC<PlayListProps> = ({ children, className, name }) => {
     <div className="px-6 mb-10">
       <h2 className="text-white font-semibold text-2xl">{name}</h2>
       <div
-        className="grid grid-rows-2 gap-y-6 grid-cols-3
+        className="grid grid-rows-2
+        grid-cols-2 gap-y-6
         md:grid-cols-4
         md:grid-rows-1
         max-[1200px]:!grid-cols-3
         max-[1200px]:!grid-rows-2
         mt-4"
       >
-        <PlayListItem
+        <PlayListCard
           name="Album"
           image="img"
           url="href"
         />
-        <PlayListItem
+        <PlayListCard
           name="Album"
           image="img"
           url="href"
         />
-        <PlayListItem
+        <PlayListCard
           name="Album"
           image="img"
           url="href"
         />
-        <PlayListItem
+        <PlayListCard
           name="Album"
           image="img"
           url="href"

@@ -14,7 +14,7 @@ export interface IUserService {
   getUserById(id: any): void;
   getUserByEmail(emai: string): void;
   authenticate(email: string, password: string): Promise<boolean>;
-  getAuthenticationStatus(): boolean;
+  // getAuthenticationStatus(): boolean;
   logout(): void;
 }
 
@@ -22,9 +22,9 @@ class UserService implements IUserService {
   user!: IUser;
   users!: IUser[];
 
-  constructor() {
-    dbConnect();
-  }
+  // constructor() {
+  //   dbConnect();
+  // }
 
   createUser(name: string, email: string, password: string): IUser {
     const user = new User({
@@ -53,22 +53,19 @@ class UserService implements IUserService {
   }
 
   async authenticate(email: string, inputPassword: string): Promise<boolean> {
-    let isAuthenticated = false;
     await this.getUserByEmail(email);
 
     const { password: storedPassword } = this.user;
-    const res = await bcrypt.compare(inputPassword, storedPassword);
+    const isAuthenticated = await bcrypt.compare(inputPassword, storedPassword);
 
-    console.log(res);
-
-    if (res) return (isAuthenticated = true);
     return isAuthenticated;
   }
 
-  getAuthenticationStatus(): boolean {
-    const cookieStore = cookies();
-    return cookieStore.has(LOGIN_COOKIE);
-  }
+  // getAuthenticationStatus(): boolean {
+  //   const cookieStore = cookies();
+  //   console.log("Cookie status : ", cookieStore.has(LOGIN_COOKIE));
+  //   return cookieStore.has(LOGIN_COOKIE);
+  // }
 
   logout(): void {
     cookies().delete(LOGIN_COOKIE);

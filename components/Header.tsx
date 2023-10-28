@@ -7,7 +7,7 @@ import { RxCaretLeft, RxCaretRight } from "react-icons/rx";
 import { HiHome } from "react-icons/hi";
 import { BiSearch } from "react-icons/bi";
 import { FaUserAlt } from "react-icons/fa";
-import Button from "./Button";
+import Button from "./common/Button";
 import useAuthModal from "@/hooks/useAuthModal";
 import axios from "axios";
 
@@ -24,17 +24,10 @@ const Header: React.FC<HeaderProps> = ({ children, className }) => {
   const router = useRouter();
 
   const dispatch = useDispatch();
-  const { onOpen } = useAuthModal();
 
   const isUserAuthenticated = useSelector(
     (state: RootState) => state.auth.isAuthenticated
   );
-
-  // useEffect(() => {
-  //   axios
-  //     .get("http://localhost:3000/api/user/login")
-  //     .then((res) => dispatch(setAuthState(res.data.isAuthenticated)));
-  // }, []);
 
   const logout = async () => {
     axios
@@ -75,18 +68,25 @@ const Header: React.FC<HeaderProps> = ({ children, className }) => {
 
         {/* Mobile View */}
         <div className="flex md:hidden gap-x-2 items-center p-6">
-          <button className="rounded-full p-2 bg-white hover:opacity-75 transition">
+          <button
+            className="rounded-full p-2 bg-white hover:opacity-75 transition"
+            onClick={() => router.push("/")}
+          >
             <HiHome
               size={20}
               className="text-black"
             />
           </button>
-          <button className="rounded-full p-2 bg-white hover:opacity-75 transition">
+          <button
+            className="rounded-full p-2 bg-white hover:opacity-75 transition"
+            onClick={() => router.push("/search")}
+          >
             <BiSearch
               size={20}
               className="text-black"
             />
           </button>
+          {children}
         </div>
         {/* Mobile view end */}
 
@@ -116,7 +116,7 @@ const Header: React.FC<HeaderProps> = ({ children, className }) => {
               </div>
               <div>
                 <Button
-                  onClick={() => onOpen()}
+                  onClick={() => router.push("/login")}
                   className="bg-white px-6 py-2"
                 >
                   Login

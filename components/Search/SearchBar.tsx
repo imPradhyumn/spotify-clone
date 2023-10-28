@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useState } from "react";
 import Header from "../Header";
 import { BiSearch } from "react-icons/bi";
 import { useDispatch } from "react-redux";
@@ -35,23 +35,19 @@ const SearchBar = () => {
   }
 
   return (
-    <React.Fragment>
-      <Header>
-        <div className="focus-within:outline outline-white outline-2 flex items-center gap-x-2 w-5/6 bg-search-bg p-3 ml-2 rounded-full">
-          <BiSearch size={22} />
-          <input
-            className="w-full border-none outline-none bg-transparent text-sm font-medium text-white placeholder-shown:text-search-text"
-            type="text"
-            id="search-inp"
-            name="search"
-            value={searchQuery}
-            onKeyUp={onEnterPress}
-            placeholder="What do you want to listen to?"
-            onChange={(e) => onChange(e)}
-          />
-        </div>
-      </Header>
-    </React.Fragment>
+    <div className="focus-within:outline outline-white outline-2 flex items-center gap-x-2 w-5/6 bg-search-bg p-3 ml-2 rounded-full">
+      <BiSearch size={22} />
+      <input
+        className="w-full border-none outline-none bg-transparent text-sm font-medium text-white placeholder-shown:text-search-text"
+        type="text"
+        id="search-inp"
+        name="search"
+        value={searchQuery}
+        onKeyUp={onEnterPress}
+        placeholder="What do you want to listen to?"
+        onChange={(e) => onChange(e)}
+      />
+    </div>
   );
 };
 

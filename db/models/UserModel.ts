@@ -34,7 +34,6 @@ const userSchema: Schema = new Schema({
 //     const salt = await bcrypt.genSalt(10);
 //     const hashedPassword = await bcrypt.hash(this.password, salt);
 //     this.password = hashedPassword;
-//     console.log("Hashed Pwd : ", this.password);
 //     return next();
 //   }
 // );

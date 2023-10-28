@@ -10,8 +10,8 @@ export async function GET(
 
   console.log(query);
 
-  const songsService: ISearchService = new SearchService();
-  const res = await songsService.getSearchResults(query);
+  const searchService: ISearchService = new SearchService();
+  const res = await searchService.getSearchResults(query);
 
   return NextResponse.json({ data: res });
 }
