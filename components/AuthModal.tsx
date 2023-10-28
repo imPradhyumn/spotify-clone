@@ -16,7 +16,7 @@ const AuthModal = () => {
       isOpen={isOpen}
     >
       <div className="flex flex-col gap-y-3 w-96 mx-auto">
-        <LoginForm closeModal={() => onClose()} />
+        <LoginForm />
       </div>
     </Modal>
   );
