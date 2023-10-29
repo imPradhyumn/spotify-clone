@@ -5,7 +5,8 @@ import { useRouter } from "next/navigation";
 import PlayButton from "../common/PlayButton";
 import { capitalize } from "@/utilities/captitalize";
 import { IArtist } from "@/db/models/ArtistModel";
-import Skeleton from "react-loading-skeleton";
+import { useDispatch } from "react-redux";
+import { playerActions } from "@/redux/reducers/playerSlice";
 
 interface PlayListItemProps {
   title: string;
@@ -22,6 +23,8 @@ const PlayListCard: React.FC<PlayListItemProps> = ({
 }) => {
   const router = useRouter();
 
+  const dispatch = useDispatch();
+
   const handleClick = () => {
     router.push(url);
   };
@@ -34,6 +37,10 @@ const PlayListCard: React.FC<PlayListItemProps> = ({
       names.push(capitalize(fullName));
     });
     return names.join(", ");
+  };
+
+  const playSong = () => {
+    dispatch(playerActions.setSongSrc(url));
   };
 
   return (
@@ -55,6 +62,7 @@ const PlayListCard: React.FC<PlayListItemProps> = ({
       hover:bg-cardHover
       transition
       "
+      onClick={playSong}
     >
       <PlayButton />
 

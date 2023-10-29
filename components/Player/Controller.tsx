@@ -24,7 +24,7 @@ const Controller = () => {
   const [currentDisplayTime, setCurrentDisplayTime] = useState(0);
   const [repeatSong, setRepeatSong] = useState(true);
 
-  let currentSongSrc = useSelector((state: RootState) => state.currentSong.url);
+  let currentSongSrc = useSelector((state: RootState) => state.player.songSrc);
 
   const rangeInputElementRef = useRef<any>(null);
   const progressBarElementRef = useRef<any>(null);

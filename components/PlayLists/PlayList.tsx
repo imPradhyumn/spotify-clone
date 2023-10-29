@@ -7,6 +7,7 @@ import React, { useEffect, useState } from "react";
 import PlayListCard from "./PlayListCard";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import SongCardSkeleton from "../skeletons/SongCardSkeleton/SongCardSkeleton";
 
 interface PlayListProps {
   children?: React.ReactNode;
@@ -43,17 +44,21 @@ const PlayList: React.FC<PlayListProps> = ({ children, className, name }) => {
         max-[1200px]:!grid-rows-2
         mt-4"
         >
-          {songsList.map((song: ISong) => {
-            return (
-              <PlayListCard
-                key={song._id}
-                title={song.title}
-                image="img"
-                url="href"
-                artists={song.artists}
-              />
-            );
-          })}
+          {isLoading
+            ? [1, 2, 3, 4].map((item) => {
+                return <SongCardSkeleton key={item} />;
+              })
+            : songsList.map((song: ISong) => {
+                return (
+                  <PlayListCard
+                    key={song._id}
+                    title={song.title}
+                    image="img"
+                    url={song.url}
+                    artists={song.artists}
+                  />
+                );
+              })}
         </div>
       </div>
     </SkeletonTheme>
