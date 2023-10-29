@@ -8,7 +8,6 @@ import { HiHome } from "react-icons/hi";
 import { BiSearch } from "react-icons/bi";
 import { FaUserAlt } from "react-icons/fa";
 import Button from "./common/Button";
-import useAuthModal from "@/hooks/useAuthModal";
 import axios from "axios";
 
 import { useSelector, useDispatch } from "react-redux";
