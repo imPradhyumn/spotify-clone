@@ -3,13 +3,14 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { authReducer } from "./reducers/authSlice";
 import { currentSongReducer } from "./reducers/currentSongSlice";
+import { playerReducer } from "./reducers/playerSlice";
 import { searchReducer } from "./reducers/searchSlice";
 
 const store = configureStore({
   reducer: {
     auth: authReducer,
     search: searchReducer,
-    currentSong: currentSongReducer,
+    player: playerReducer,
   },
   preloadedState: {
     auth: {
