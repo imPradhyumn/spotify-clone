@@ -1,5 +1,5 @@
-export function capitalize(str: string) {
-  if (!str) return;
+export function capitalize(str: string): string {
+  if (!str) return "";
   const stringArr: string[] = str.split(" ");
   let res: string = "";
 
