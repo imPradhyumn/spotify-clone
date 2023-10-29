@@ -2,21 +2,38 @@
 
 import React from "react";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
-import { IoMdPlay } from "react-icons/io";
 import PlayButton from "../common/PlayButton";
+import { capitalize } from "@/utilities/captitalize";
+import { IArtist } from "@/db/models/ArtistModel";
+import Skeleton from "react-loading-skeleton";
 
 interface PlayListItemProps {
-  name: string;
+  title: string;
   image: string;
   url: string;
+  artists: IArtist[];
 }
 
-const PlayListCard: React.FC<PlayListItemProps> = ({ image, name, url }) => {
+const PlayListCard: React.FC<PlayListItemProps> = ({
+  image,
+  title = "Unknown",
+  url,
+  artists,
+}) => {
   const router = useRouter();
 
   const handleClick = () => {
     router.push(url);
+  };
+
+  const renderArtistsNames = () => {
+    let names: string[] = [];
+    let fullName: string = "";
+    artists.map((artist: IArtist) => {
+      const fullName: string = artist.firstName + " " + artist.lastName;
+      names.push(capitalize(fullName));
+    });
+    return names.join(", ");
   };
 
   return (
@@ -31,7 +48,6 @@ const PlayListCard: React.FC<PlayListItemProps> = ({ image, name, url }) => {
       max-w-[15rem]
       min-w-[12rem]
       h-auto
-      p-4
       rounded-lg
       bg-card
       cursor-pointer
@@ -42,16 +58,16 @@ const PlayListCard: React.FC<PlayListItemProps> = ({ image, name, url }) => {
     >
       <PlayButton />
 
-      <div className="flex flex-col gap-y-3 w-[12rem] rounded-lg">
+      <div className="flex flex-col gap-y-3 w-full p-4 rounded-lg">
         <img
           src="/images/lootera.jpg"
           alt="album-img"
           className="w-full h-[11rem] rounded-lg object-cover"
         />
         <div>
-          <h3 className="text-lg font-bold truncate">Monta Re</h3>
+          <h3 className="text-lg font-bold truncate">{capitalize(title)}</h3>
           <p className="text-sm mt-1 tracking-wider line-clamp-2 max-[1200px]:line-clamp-1">
-            Arijit Singh, Amitabh Bhattacharya
+            {renderArtistsNames()}
           </p>
         </div>
       </div>

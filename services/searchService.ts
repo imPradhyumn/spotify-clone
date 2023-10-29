@@ -16,7 +16,11 @@ interface ISearchResult {
 export interface ISearchService extends ISearchResult {
   getSearchResults(query: string): Promise<ISearchResult>;
   getSongsByTitle(title: string): Promise<void>;
+  getTop5Songs(): Promise<ISong[]>;
+
   getAlbumsList(query: string): Promise<void>;
+  getTop5Albums(): Promise<void>;
+
   getTopArtist(): IArtist;
   getArtistsList(query: string): Promise<void>;
 }
@@ -26,10 +30,6 @@ export default class SearchService implements ISearchService {
   albumsList!: IAlbum[];
   artistsList!: IArtist[];
   topArtist!: IArtist[];
-
-  // constructor() {
-  //   dbConnect();
-  // }
 
   async getSearchResults(query: string): Promise<ISearchResult> {
     await this.getSongsByTitle(query);
@@ -52,6 +52,18 @@ export default class SearchService implements ISearchService {
       this.songsList = doc;
     } catch (err) {
       console.log("Fetching Songs ERR : ", err);
+    }
+  }
+
+  async getTop5Albums(): Promise<void> {}
+
+  async getTop5Songs(): Promise<ISong[]> {
+    try {
+      const docs = await Song.find().populate("artists").limit(5);
+      this.songsList = docs;
+      return this.songsList;
+    } catch (err) {
+      console.log("Fetching all songs ERR : ", err);
     }
   }
 

@@ -1,5 +1,12 @@
-import React from "react";
+"use client";
+
+import { URL_PREFIX } from "@/constants";
+import { ISong } from "@/db/models/SongModel";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import PlayListCard from "./PlayListCard";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 interface PlayListProps {
   children?: React.ReactNode;
@@ -8,40 +15,48 @@ interface PlayListProps {
 }
 
 const PlayList: React.FC<PlayListProps> = ({ children, className, name }) => {
+  const [songsList, setSongsList] = useState([]);
+
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    (async function fetchSongs() {
+      const res = await axios(URL_PREFIX + "/search/song");
+      setSongsList(res.data.songsList);
+    })();
+    setIsLoading(false);
+  }, []);
+
   return (
-    <div className="px-6 mb-10">
-      <h2 className="text-white font-semibold text-2xl">{name}</h2>
-      <div
-        className="grid grid-rows-2
+    <SkeletonTheme
+      baseColor="#202020"
+      highlightColor="#444"
+    >
+      <div className="px-6 mb-10">
+        <h2 className="text-white font-semibold text-2xl">{name}</h2>
+        <div
+          className="grid grid-rows-2
         grid-cols-2 gap-y-6
         md:grid-cols-4
         md:grid-rows-1
         max-[1200px]:!grid-cols-3
         max-[1200px]:!grid-rows-2
         mt-4"
-      >
-        <PlayListCard
-          name="Album"
-          image="img"
-          url="href"
-        />
-        <PlayListCard
-          name="Album"
-          image="img"
-          url="href"
-        />
-        <PlayListCard
-          name="Album"
-          image="img"
-          url="href"
-        />
-        <PlayListCard
-          name="Album"
-          image="img"
-          url="href"
-        />
+        >
+          {songsList.map((song: ISong) => {
+            return (
+              <PlayListCard
+                key={song._id}
+                title={song.title}
+                image="img"
+                url="href"
+                artists={song.artists}
+              />
+            );
+          })}
+        </div>
       </div>
-    </div>
+    </SkeletonTheme>
   );
 };
 
