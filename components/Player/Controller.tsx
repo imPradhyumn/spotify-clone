@@ -51,7 +51,6 @@ const Controller = () => {
   };
 
   const resetPlayer = () => {
-    setCurrentDisplayTime(-1); //-1 because setInterval would call at last one more time so prev = prev+1 gets zero
     progressBarElementRef.current.style.width = "0";
     rangeInputElementRef.current.value = "0";
     if (!player?.loop) setIsSongPlaying(false);

@@ -4,7 +4,6 @@ import { Figtree } from "next/font/google";
 import StoreProvider from "@/redux/Provider";
 import Player from "@/components/Player/Player";
 import React from "react";
-import Container from "@/components/Container";
 import dbConnect from "@/db/database";
 import { cookies } from "next/headers";
 import { LOGIN_COOKIE } from "@/constants";

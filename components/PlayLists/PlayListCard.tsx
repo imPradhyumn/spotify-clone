@@ -1,12 +1,13 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import PlayButton from "../common/PlayButton";
 import { capitalize } from "@/utilities/captitalize";
 import { IArtist } from "@/db/models/ArtistModel";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { playerActions } from "@/redux/reducers/playerSlice";
+import { RootState } from "@/redux/store";
 
 interface PlayListItemProps {
   title: string;
@@ -24,10 +25,9 @@ const PlayListCard: React.FC<PlayListItemProps> = ({
   const router = useRouter();
 
   const dispatch = useDispatch();
-
-  const handleClick = () => {
-    router.push(url);
-  };
+  const isLoggedIn = useSelector(
+    (state: RootState) => state.auth.isAuthenticated
+  );
 
   const renderArtistsNames = () => {
     let names: string[] = [];
@@ -40,6 +40,10 @@ const PlayListCard: React.FC<PlayListItemProps> = ({
   };
 
   const playSong = () => {
+    if (!isLoggedIn) {
+      router.push("/login");
+      return;
+    }
     dispatch(playerActions.setSongSrc(url));
   };
 
