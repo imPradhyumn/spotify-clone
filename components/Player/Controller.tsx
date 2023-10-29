@@ -43,6 +43,13 @@ const Controller = () => {
     setIsSongPlaying((prev) => !prev);
   };
 
+  const isSongEnded = () => {
+    return (
+      Math.round(player?.currentTime ?? 0) >=
+      Math.round(player?.duration ?? 0) - 1
+    );
+  };
+
   const resetPlayer = () => {
     setCurrentDisplayTime(-1); //-1 because setInterval would call at last one more time so prev = prev+1 gets zero
     progressBarElementRef.current.style.width = "0";
@@ -61,7 +68,7 @@ const Controller = () => {
     rangeInputElementRef.current.value = Math.round(currentTime).toString();
 
     //check if songs comes to end
-    if (Math.round(currentTime) >= Math.round(player?.duration ?? 0) - 1) {
+    if (isSongEnded()) {
       resetPlayer();
     }
   };
@@ -89,7 +96,10 @@ const Controller = () => {
     if (isSongPlaying) {
       interval = window.setInterval(() => {
         songProgressEffect();
-        setCurrentDisplayTime((prev) => prev + 1);
+
+        isSongEnded()
+          ? setCurrentDisplayTime(0)
+          : setCurrentDisplayTime((prev) => prev + 1); //condition needed or else currentDisplayTime would be set to 0+1 => 1
       }, 1000);
     } else window.clearInterval(interval);
 
