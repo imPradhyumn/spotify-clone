@@ -35,7 +35,7 @@ const Controller = () => {
   }
 
   const togglePlayer = async () => {
-    if (isSongPlaying) {
+    if (player?.paused == false) {
       player?.pause();
     } else {
       await player?.play();
@@ -44,11 +44,10 @@ const Controller = () => {
   };
 
   const resetPlayer = () => {
-    if (!repeatSong) setIsSongPlaying(false);
-
-    setCurrentDisplayTime(0);
+    setCurrentDisplayTime(-1); //-1 because setInterval would call at last one more time so prev = prev+1 gets zero
     progressBarElementRef.current.style.width = "0";
     rangeInputElementRef.current.value = "0";
+    if (!player?.loop) setIsSongPlaying(false);
   };
 
   const songProgressEffect = () => {
@@ -62,12 +61,16 @@ const Controller = () => {
     rangeInputElementRef.current.value = Math.round(currentTime).toString();
 
     //check if songs comes to end
-    if (Math.round(currentTime) == Math.round(player?.duration ?? 0) - 1)
+    if (Math.round(currentTime) >= Math.round(player?.duration ?? 0) - 1) {
       resetPlayer();
+    }
   };
 
   useEffect(() => {
-    setPlayer(document.getElementById("audio-player") as HTMLAudioElement);
+    const audioPlayer = document.getElementById(
+      "audio-player"
+    ) as HTMLAudioElement;
+    setPlayer(audioPlayer);
   }, []);
 
   // Change song audio 'src' everytime new song is selected
@@ -75,8 +78,8 @@ const Controller = () => {
     resetPlayer();
 
     if (player) {
+      player?.pause(); //can't toggle here, as play is asynchronous resulting in race condition b/w play and pause
       player.src = currentSongSrc;
-      player?.load();
       player?.play();
     }
   }, [currentSongSrc]);
@@ -149,6 +152,7 @@ const Controller = () => {
         </div>
 
         <ProgressBar
+          key={currentSongSrc}
           player={player}
           currentDisplayTime={currentDisplayTime}
           setCurrentDisplayTime={setCurrentDisplayTime}
