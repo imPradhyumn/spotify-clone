@@ -65,6 +65,7 @@ export default class SearchService implements ISearchService {
     } catch (err) {
       console.log("Fetching all songs ERR : ", err);
     }
+    return this.songsList;
   }
 
   async getAlbumsList(query: string): Promise<void> {
