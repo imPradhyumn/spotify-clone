@@ -27,7 +27,7 @@ const LoginForm = () => {
     e.preventDefault();
 
     axios
-      .post(process.env.URL_PREFIX + "/user/login", {
+      .post(URL_PREFIX + "/user/login", {
         email: "prabhat@gmail.com",
         password: "123456",
       })
