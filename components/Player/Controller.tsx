@@ -83,10 +83,15 @@ const Controller = () => {
   useEffect(() => {
     resetPlayer();
 
+    async function play() {
+      await player?.play();
+    }
+
     if (player) {
       player?.pause(); //can't toggle here, as play is asynchronous resulting in race condition b/w play and pause
+      // player?.load();
       player.src = currentSongSrc;
-      player?.play();
+      play();
     }
   }, [currentSongSrc]);
 

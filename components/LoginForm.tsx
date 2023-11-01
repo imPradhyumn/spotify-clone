@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { setAuthState } from "@/redux/reducers/authSlice";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { URL_PREFIX } from "@/constants";
 
 const LoginForm = () => {
   const dispatch = useDispatch();
@@ -26,7 +27,7 @@ const LoginForm = () => {
     e.preventDefault();
 
     axios
-      .post("http://localhost:3000/api/user/login", {
+      .post(URL_PREFIX + "/user/login", {
         email: "prabhat@gmail.com",
         password: "123456",
       })
