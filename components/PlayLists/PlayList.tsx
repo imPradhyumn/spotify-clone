@@ -22,8 +22,7 @@ const PlayList: React.FC<PlayListProps> = ({ children, className, name }) => {
 
   useEffect(() => {
     (async function fetchSongs() {
-      console.log(URL_PREFIX);
-      const res = await axios(URL_PREFIX + "/search/song");
+      const res = await axios(window.location.origin + "/api/search/song");
       setSongsList(res.data.songsList);
     })();
     setIsLoading(false);
