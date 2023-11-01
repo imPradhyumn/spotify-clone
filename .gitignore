@@ -36,3 +36,5 @@ next-env.d.ts
 
 pwd.txt
 .env
+
+.vercel
