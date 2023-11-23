@@ -21,11 +21,13 @@ const PlayList: React.FC<PlayListProps> = ({ children, className, name }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    (async function fetchSongs() {
-      const res = await axios("/api/search/song");
-      setSongsList(res.data.songsList);
-    })();
-    setIsLoading(false);
+    axios
+      .get("/api/search/song")
+      .then((res) => {
+        setSongsList(res.data.songsList);
+        setIsLoading(false);
+      })
+      .catch((err) => console.log("Error :", err));
   }, []);
 
   return (
