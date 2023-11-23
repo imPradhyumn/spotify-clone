@@ -1,11 +1,10 @@
 "use client";
 
-import { URL_PREFIX } from "@/constants";
 import { ISong } from "@/db/models/SongModel";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import PlayListCard from "./PlayListCard";
-import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import SongCardSkeleton from "../skeletons/SongCardSkeleton/SongCardSkeleton";
 
@@ -50,7 +49,7 @@ const PlayList: React.FC<PlayListProps> = ({ children, className, name }) => {
             ? [1, 2, 3, 4].map((item) => {
                 return <SongCardSkeleton key={item} />;
               })
-            : songsList.map((song: ISong) => {
+            : songsList?.map((song: ISong) => {
                 return (
                   <PlayListCard
                     key={song._id}
