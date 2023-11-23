@@ -30,7 +30,7 @@ const Header: React.FC<HeaderProps> = ({ children, className }) => {
 
   const logout = async () => {
     axios
-      .get("http://localhost:3000/api/user/logout")
+      .get("/api/user/logout")
       .then((res) => {
         dispatch(setAuthState(false));
       })
