@@ -23,7 +23,7 @@ const LoginForm = () => {
   const router = useRouter();
   const pathName = usePathname();
 
-  const authenticateUser = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const authenticateUser = (e: React.MouseEvent) => {
     e.preventDefault();
     axios
       .post("http://localhost:8888/user/login", {
@@ -106,7 +106,7 @@ const LoginForm = () => {
             </div>
             <button
               type="button"
-              onClick={authenticateUser}
+              onClick={(e) => authenticateUser(e)}
               className="bg-green-500 py-3 font-bold mt-3 text-black border-none outline-none rounded-full"
             >
               Login
