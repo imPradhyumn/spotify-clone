@@ -73,8 +73,6 @@ export default function SearchSection() {
       artistsList.push(song.artists[0]);
     });
 
-    console.log("hello", artistsList);
-
     dispatch(setSongsState(songsList));
     dispatch(setAlbumsState(albumsList));
     dispatch(setArtistsState(artistsList));
@@ -88,7 +86,7 @@ export default function SearchSection() {
       from-[rgb(32,32,32)] to-[rgb(10,10,10)]"
     >
       <p className="font-bold text-xl">
-        Let's find something for your playlist
+        {"Let's find something for your playlist"}
       </p>
       <input
         className="w-72
