@@ -23,9 +23,7 @@ const PlayList: React.FC<PlayListProps> = ({ children, className, name }) => {
   useEffect(() => {
     console.log(process.env.REACT_APP_API_URL);
     axios
-      .get(
-        `http://ec2-51-20-117-227.eu-north-1.compute.amazonaws.com:8888/song/get/all`
-      )
+      .get(`https://spotify-clone-backend-cut9.onrender.com/song/get/all`)
       .then((res) => {
         setSongsList(res.data);
         setIsLoading(false);

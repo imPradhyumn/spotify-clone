@@ -26,7 +26,7 @@ const LoginForm = () => {
   const authenticateUser = (e: React.MouseEvent) => {
     e.preventDefault();
     axios
-      .post("http://localhost:8888/user/login", {
+      .post("https://spotify-clone-backend-cut9.onrender.com/user/login", {
         userId: "sarcasmic_billi",
         password: "Anshu1407",
       })
@@ -45,7 +45,7 @@ const LoginForm = () => {
   const signUp = (e: any) => {
     e.preventDefault();
     axios
-      .post("http://localhost:8888/user/signup", {
+      .post("https://spotify-clone-backend-cut9.onrender.com/user/signup", {
         firstName: "Anshika",
         lastName: "Maheshwari",
         email: "pyara_panda@gmail.com",

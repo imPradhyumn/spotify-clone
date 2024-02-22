@@ -18,7 +18,7 @@ const SearchBar = () => {
 
   const fetchAndStoreData = async () => {
     const res = await axios.get(
-      `http://ec2-51-20-117-227.eu-north-1.compute.amazonaws.com:8888/song/get/${searchQuery}`
+      `https://spotify-clone-backend-cut9.onrender.com/song/get/${searchQuery}`
     );
 
     const songsList = res.data;
