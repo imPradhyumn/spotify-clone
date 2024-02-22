@@ -29,12 +29,7 @@ const Header: React.FC<HeaderProps> = ({ children, className }) => {
   );
 
   const logout = async () => {
-    axios
-      .get("/api/user/logout")
-      .then((res) => {
-        dispatch(setAuthState(false));
-      })
-      .catch((err) => console.log("Logout Failed: ", err));
+    dispatch(setAuthState(false));
   };
 
   return (

@@ -12,8 +12,7 @@ const TopResultCard = () => {
     useSelector((state: RootState) => state.search.artistsList) ?? [];
 
   const topArtist = artistsList[0] ?? {
-    firstName: "Unknown",
-    lastName: "Unknown",
+    name: "Unknown",
   };
 
   return (
@@ -29,9 +28,7 @@ const TopResultCard = () => {
             />
           </div>
           <h3 className="text-3xl tail tracking-wide font-bold mt-8">
-            {capitalize(topArtist?.firstName) +
-              " " +
-              capitalize(topArtist?.lastName)}
+            {capitalize(topArtist?.name)}
           </h3>
           <Button className="text-white bg-[rgba(19,19,19)] py-1 px-2 mt-4 text-sm hover:bg-opacity-90 hover:opacity-100">
             Artist

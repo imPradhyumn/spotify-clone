@@ -1,12 +1,36 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { HiPlus } from "react-icons/hi";
 import { TbPlaylist } from "react-icons/tb";
 import AddPodcasts from "./AddPodcasts";
+import UserLibrary from "./AuthenticatedUser/UserLibrary";
 import CreatePlayList from "./CreatePlayList";
 
+const createNewPlaylistDialog = () => {
+  return (
+    <div
+      className="p-1 absolute w-fit bg-[rgb(40,40,40)]
+    right-0 top-40
+    left-72 z-[99]
+    cursor-default
+    text-sm"
+    >
+      <div className="hover:bg-[rgb(80,80,80)]">
+        <h6 className="p-2">Create new playlist</h6>
+      </div>
+    </div>
+  );
+};
+
 const Library = () => {
-  const onClick = () => {};
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  const toggleCreateNewPlaylistDialog = (e: any) => {
+    e.stopPropagation();
+    setIsDialogOpen((prev) => !prev);
+  };
+
+  const isLoggedIn = true;
 
   return (
     <div className="flex flex-col">
@@ -19,14 +43,23 @@ const Library = () => {
           <h3 className="text-neutral-400 font-medium text-md">Library</h3>
         </div>
         <HiPlus
+          onClick={(e) => toggleCreateNewPlaylistDialog(e)}
           className="text-neutral-400 cursor-pointer hover:text-white transition"
           size={20}
         />
       </div>
 
+      {isDialogOpen ? createNewPlaylistDialog() : null}
+
       <div className="flex flex-col gap-y-4 px-3 mt-4">
-        <AddPodcasts />
-        <CreatePlayList />
+        {isLoggedIn ? (
+          <UserLibrary />
+        ) : (
+          <React.Fragment>
+            <AddPodcasts />
+            <CreatePlayList />
+          </React.Fragment>
+        )}
       </div>
     </div>
   );

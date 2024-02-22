@@ -1,16 +1,12 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import { HiHome } from "react-icons/hi";
 import { BiSearch } from "react-icons/bi";
 import Box from "../common/Box";
 import Library from "../Library/Library";
 import NavLink from "./NavLink";
-import { useCookies } from "react-cookie";
-import { LOGIN_COOKIE } from "@/constants";
-import { useDispatch } from "react-redux";
-import { setAuthState } from "@/redux/reducers/authSlice";
 
 interface SideBarProps {
   children?: React.ReactNode;

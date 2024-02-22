@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import Header from "../Header";
 import { BiSearch } from "react-icons/bi";
 import { useDispatch } from "react-redux";
 import {
@@ -18,8 +17,18 @@ const SearchBar = () => {
   const dispatch = useDispatch();
 
   const fetchAndStoreData = async () => {
-    const res = await axios.get(URL_PREFIX + `/search/${searchQuery}`);
-    const { songsList, artistsList, albumsList } = res.data.data;
+    const res = await axios.get(
+      `http://ec2-51-20-117-227.eu-north-1.compute.amazonaws.com:8888/song/get/${searchQuery}`
+    );
+
+    const songsList = res.data;
+    const albumsList: any = [];
+    const artistsList: any = [];
+
+    songsList.forEach((song: any) => {
+      albumsList.push(song.album);
+      artistsList.push(song.artists[0]);
+    });
 
     dispatch(setSongsState(songsList));
     dispatch(setAlbumsState(albumsList));

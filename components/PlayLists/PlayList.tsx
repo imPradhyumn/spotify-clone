@@ -7,6 +7,7 @@ import PlayListCard from "./PlayListCard";
 import { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import SongCardSkeleton from "../skeletons/SongCardSkeleton/SongCardSkeleton";
+import { URL_PREFIX } from "@/constants";
 
 interface PlayListProps {
   children?: React.ReactNode;
@@ -20,11 +21,15 @@ const PlayList: React.FC<PlayListProps> = ({ children, className, name }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    console.log(process.env.REACT_APP_API_URL);
     axios
-      .get("/api/search/song")
+      .get(
+        `http://ec2-51-20-117-227.eu-north-1.compute.amazonaws.com:8888/song/get/all`
+      )
       .then((res) => {
-        setSongsList(res.data.songsList);
+        setSongsList(res.data);
         setIsLoading(false);
+        // console.log(songsList);
       })
       .catch((err) => console.log("Error :", err));
   }, []);
@@ -37,8 +42,9 @@ const PlayList: React.FC<PlayListProps> = ({ children, className, name }) => {
       <div className="px-6 mb-10">
         <h2 className="text-white font-semibold text-2xl">{name}</h2>
         <div
-          className="grid grid-rows-2
-        grid-cols-2 gap-y-6
+          className="grid
+        grid-rows-3 grid-cols-1
+        gap-y-6
         md:grid-cols-4
         md:grid-rows-1
         max-[1200px]:!grid-cols-3
@@ -52,7 +58,7 @@ const PlayList: React.FC<PlayListProps> = ({ children, className, name }) => {
             : songsList?.map((song: ISong) => {
                 return (
                   <PlayListCard
-                    key={song._id}
+                    key={song.id}
                     title={song.title}
                     image="img"
                     url={song.url}

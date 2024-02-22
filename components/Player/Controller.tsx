@@ -8,8 +8,7 @@ import { RootState } from "@/redux/store";
 import { SlLoop } from "react-icons/sl";
 import { RxShuffle } from "react-icons/rx";
 import ProgressBar from "./ProgressBar";
-
-let interval: number = 0; //setInterval function return value;
+import { LuLoader } from "react-icons/lu";
 
 export const mapTimeRangeToPercentage = (
   currentTime: number,
@@ -21,55 +20,26 @@ export const mapTimeRangeToPercentage = (
 const Controller = () => {
   const [isSongPlaying, setIsSongPlaying] = useState(false);
   const [player, setPlayer] = useState<HTMLAudioElement | null>(null);
-  const [currentDisplayTime, setCurrentDisplayTime] = useState(0);
+  const [audioDuration, setAudioDuration] = useState<number>(0);
   const [repeatSong, setRepeatSong] = useState(true);
+  const [isSongLoading, setIsSongLoading] = useState(false);
 
-  let currentSongSrc = useSelector((state: RootState) => state.player.songSrc);
-
-  const rangeInputElementRef = useRef<any>(null);
-  const progressBarElementRef = useRef<any>(null);
+  const currentSongSrc = useSelector(
+    (state: RootState) => state.player.songSrc
+  );
   const audioPlayerRef = useRef<any>(null);
 
-  if (currentSongSrc === "") {
-    currentSongSrc = "/songs/main-rang-sharbaton-ka.mp3";
-  }
-
-  const togglePlayer = async () => {
-    if (player?.paused == false) {
-      player?.pause();
-    } else {
-      await player?.play();
-    }
+  const togglePlayer = () => {
+    isSongPlaying === false ? playAudio() : pauseAudio();
     setIsSongPlaying((prev) => !prev);
   };
 
-  const isSongEnded = () => {
-    return (
-      Math.round(player?.currentTime ?? 0) >=
-      Math.round(player?.duration ?? 0) - 1
-    );
+  const playAudio = async () => {
+    await player?.play();
   };
 
-  const resetPlayer = () => {
-    progressBarElementRef.current.style.width = "0";
-    rangeInputElementRef.current.value = "0";
-    if (!player?.loop) setIsSongPlaying(false);
-  };
-
-  const songProgressEffect = () => {
-    const currentTime = player?.currentTime ?? 0;
-    const duration = player?.duration ?? 0;
-
-    //Map [0-endTime] into percentage [0-100] to use this val for progress-bar width
-    const newWidth = mapTimeRangeToPercentage(currentTime, duration);
-
-    progressBarElementRef.current.style.width = newWidth + "%";
-    rangeInputElementRef.current.value = Math.round(currentTime).toString();
-
-    //check if songs comes to end
-    if (isSongEnded()) {
-      resetPlayer();
-    }
+  const pauseAudio = () => {
+    player?.pause();
   };
 
   useEffect(() => {
@@ -79,38 +49,28 @@ const Controller = () => {
     setPlayer(audioPlayer);
   }, []);
 
-  // Change song audio 'src' everytime new song is selected
+  const fetchAudioDuration = function () {
+    return new Promise((resolve, reject) => {
+      const audio = new Audio(currentSongSrc) as HTMLAudioElement;
+      audio.addEventListener("loadedmetadata", () => {
+        resolve(audio?.duration);
+      });
+    });
+  };
+
   useEffect(() => {
-    resetPlayer();
+    if (currentSongSrc.length === 0) return;
 
-    async function play() {
-      await player?.play();
-    }
-
-    if (player) {
-      player?.pause(); //can't toggle here, as play is asynchronous resulting in race condition b/w play and pause
-      // player?.load();
-      player.src = currentSongSrc;
-      play();
-    }
+    setIsSongLoading(true);
+    setIsSongPlaying(false);
+    fetchAudioDuration().then((duration: any) => {
+      playAudio();
+      setAudioDuration(duration);
+      setIsSongLoading(false);
+      setIsSongPlaying(true);
+      // console.log(duration);
+    });
   }, [currentSongSrc]);
-
-  useEffect(() => {
-    // To create song progress animation by increasing width of div element
-    if (isSongPlaying) {
-      interval = window.setInterval(() => {
-        songProgressEffect();
-
-        isSongEnded()
-          ? setCurrentDisplayTime(0)
-          : setCurrentDisplayTime((prev) => prev + 1); //condition needed or else currentDisplayTime would be set to 0+1 => 1
-      }, 1000);
-    } else window.clearInterval(interval);
-
-    return () => {
-      window.clearInterval(interval);
-    };
-  }, [isSongPlaying]);
 
   return (
     <React.Fragment>
@@ -139,7 +99,12 @@ const Controller = () => {
             className="bg-white rounded-full hover:scale-105"
             onClick={togglePlayer}
           >
-            {!isSongPlaying ? (
+            {isSongLoading ? (
+              <LuLoader
+                className="text-black p-1"
+                size={25}
+              />
+            ) : !isSongPlaying ? (
               <BiPlay
                 className="text-black pl-[0.15rem]"
                 size={35}
@@ -168,10 +133,8 @@ const Controller = () => {
         <ProgressBar
           key={currentSongSrc}
           player={player}
-          currentDisplayTime={currentDisplayTime}
-          setCurrentDisplayTime={setCurrentDisplayTime}
-          rangeInputElementRef={rangeInputElementRef}
-          progressBarElementRef={progressBarElementRef}
+          audioDuration={audioDuration}
+          isSongPlaying={isSongPlaying}
         />
       </div>
     </React.Fragment>

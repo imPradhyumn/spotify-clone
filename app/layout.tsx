@@ -4,7 +4,6 @@ import { Figtree } from "next/font/google";
 import StoreProvider from "@/redux/Provider";
 import Player from "@/components/Player/Player";
 import React from "react";
-import dbConnect from "@/db/database";
 import { cookies } from "next/headers";
 import { LOGIN_COOKIE } from "@/constants";
 
@@ -26,7 +25,6 @@ export default async function RootLayout({
 }) {
   // Connect to DB as soon as land on search page
 
-  await dbConnect();
   const loginStatus: boolean = await checkLoginStatus();
 
   return (

@@ -1,8 +1,11 @@
+"use client";
+
 import Container from "@/components/Container";
 import Header from "@/components/Header";
 import PlayLists from "@/components/PlayLists/PlayLists";
 import SideBar from "@/components/SideSection/SideBar";
-import React from "react";
+import React, { useState } from "react";
+import Star from "./star.svg";
 
 export default function HomeDashboard() {
   return (

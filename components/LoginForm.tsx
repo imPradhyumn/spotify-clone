@@ -23,34 +23,38 @@ const LoginForm = () => {
   const router = useRouter();
   const pathName = usePathname();
 
-  const authenticateUser = (e: any) => {
+  const authenticateUser = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     axios
-      .post("/api/user/login", {
-        email: "prabhat@gmail.com",
-        password: "123456",
+      .post("http://localhost:8888/user/login", {
+        userId: "sarcasmic_billi",
+        password: "Anshu1407",
       })
       .then((res) => {
-        if (!res.data.isAuthenticated) {
-          alert("Wrong Password");
+        console.log(res);
+        if (res.status !== 200) {
+          alert("Wrong credentials");
           return;
         }
         dispatch(setAuthState(true));
         router.push("/");
       })
-      .catch((err) => console.log("Login Err: ", err));
+      .catch((err) => console.log("Axios Err: ", err));
   };
 
   const signUp = (e: any) => {
     e.preventDefault();
     axios
-      .post("/api/user/signup", {
-        name: "Prabhat",
-        email: "prabhat@gmail.com",
-        password: "123456",
+      .post("http://localhost:8888/user/signup", {
+        firstName: "Anshika",
+        lastName: "Maheshwari",
+        email: "pyara_panda@gmail.com",
+        password: "Anshu1407",
+        userName: "sarcasmic_billi",
+        playlist: null,
       })
       .then((res) => console.log("Signup Api Res: ", res))
-      .catch((err) => console.log("Signup Failed: ", err));
+      .catch((err) => console.log("Axios Error: ", err));
   };
 
   return (

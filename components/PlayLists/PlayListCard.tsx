@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { useRouter } from "next/navigation";
 import PlayButton from "../common/PlayButton";
 import { capitalize } from "@/utilities/captitalize";
@@ -16,6 +16,14 @@ interface PlayListItemProps {
   artists: IArtist[];
 }
 
+const renderArtistsNames = (artists: any) => {
+  let names: string[] = [];
+  artists.map((artist: IArtist) => {
+    names.push(capitalize(artist.name));
+  });
+  return names.join(", ");
+};
+
 const PlayListCard: React.FC<PlayListItemProps> = ({
   image,
   title = "Unknown",
@@ -29,21 +37,11 @@ const PlayListCard: React.FC<PlayListItemProps> = ({
     (state: RootState) => state.auth.isAuthenticated
   );
 
-  const renderArtistsNames = () => {
-    let names: string[] = [];
-    let fullName: string = "";
-    artists.map((artist: IArtist) => {
-      const fullName: string = artist.firstName + " " + artist.lastName;
-      names.push(capitalize(fullName));
-    });
-    return names.join(", ");
-  };
-
   const playSong = () => {
-    if (!isLoggedIn) {
-      router.push("/login");
-      return;
-    }
+    // if (!isLoggedIn) {
+    //   router.push("/login");
+    //   return;
+    // }
     dispatch(playerActions.setSongSrc(url));
   };
 
@@ -79,7 +77,7 @@ const PlayListCard: React.FC<PlayListItemProps> = ({
         <div>
           <h3 className="text-lg font-bold truncate">{capitalize(title)}</h3>
           <p className="text-sm mt-1 tracking-wider line-clamp-2 max-[1200px]:line-clamp-1">
-            {renderArtistsNames()}
+            {renderArtistsNames(artists)}
           </p>
         </div>
       </div>

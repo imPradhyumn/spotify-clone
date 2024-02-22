@@ -6,7 +6,6 @@ const Dashboard = () => {
   return (
     <div className="bg-search-dashboard px-6 pt-2">
       <Tags />
-
       <TopResult />
     </div>
   );

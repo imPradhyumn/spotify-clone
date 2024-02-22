@@ -1,20 +1,8 @@
 "use client";
 
-import React, { useEffect } from "react";
-import SideBar from "./SideSection/SideBar";
-import { useSelector } from "react-redux";
-import { RootState } from "@/redux/store";
+import React from "react";
 
-const Container = ({
-  children,
-  isLoggedIn,
-}: {
-  children?: React.ReactNode;
-  isLoggedIn?: boolean;
-}) => {
-  const isAuthenticated = useSelector(
-    (state: RootState) => state.auth.isAuthenticated
-  );
+const Container = ({ children }: { children?: React.ReactNode }) => {
   return <div className="flex h-full gap-x-2 p-2">{children}</div>;
 };
 

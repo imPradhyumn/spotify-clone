@@ -17,7 +17,7 @@ export interface PlayerState extends ICurrentSong {
 
 const initialState: PlayerState = {
   isPlaying: false,
-  songSrc: "/songs/main-rang-sharbaton-ka.mp3",
+  songSrc: "",
   imgPath: "",
   artists: ["Atif Aslam"],
   isShufflenOn: false,

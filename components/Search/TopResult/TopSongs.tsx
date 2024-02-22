@@ -38,13 +38,10 @@ const renderSongItem = (item: ISong, dispatch: any) => {
             {item?.artists?.map((artist: IArtist) => {
               return (
                 <span
-                  key={artist.firstName}
+                  key={artist.name}
                   className="hover:underline"
                 >
-                  {capitalize(artist.firstName) +
-                    " " +
-                    capitalize(artist.lastName) +
-                    ", "}
+                  {capitalize(artist.name)}
                 </span>
               );
             })}
