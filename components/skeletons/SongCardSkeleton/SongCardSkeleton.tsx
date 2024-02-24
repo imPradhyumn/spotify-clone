@@ -5,8 +5,12 @@ const SongCardSkeleton = ({ children }: { children?: React.ReactNode }) => {
   return (
     <div
       className="flex item-center
-      justify-center rounded-lg h-[18rem] w-[85%] max-w-[15rem]
-      min-w-[12rem] border border-[#202020]"
+      justify-center rounded-lg
+      h-[18rem] w-[55%]
+      md:w-[85%]
+      max-w-[15rem]
+      min-w-[10rem]
+      border border-[#202020]"
     >
       <div className="flex flex-col gap-y-3 w-full p-4 rounded-lg">
         {/* Img */}

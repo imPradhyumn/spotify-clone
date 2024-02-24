@@ -14,7 +14,7 @@ export const mapTimeRangeToPercentage = (
   currentTime: number,
   duration: number = 0
 ) => {
-  return (100 * (currentTime - 0)) / (duration - 0);
+  return (100 * currentTime) / duration;
 };
 
 const Controller = () => {
@@ -24,22 +24,23 @@ const Controller = () => {
   const [repeatSong, setRepeatSong] = useState(true);
   const [isSongLoading, setIsSongLoading] = useState(false);
 
-  const currentSongSrc = useSelector(
+  const currentSongSrc: string = useSelector(
     (state: RootState) => state.player.songSrc
   );
   const audioPlayerRef = useRef<any>(null);
 
   const togglePlayer = () => {
     isSongPlaying === false ? playAudio() : pauseAudio();
-    setIsSongPlaying((prev) => !prev);
   };
 
   const playAudio = async () => {
     await player?.play();
+    setIsSongPlaying(true);
   };
 
   const pauseAudio = () => {
     player?.pause();
+    setIsSongPlaying(false);
   };
 
   useEffect(() => {
@@ -49,7 +50,9 @@ const Controller = () => {
     setPlayer(audioPlayer);
   }, []);
 
-  const fetchAudioDuration = function () {
+  // To load song before player starts
+  const fetchAudioData = function () {
+    console.log(currentSongSrc);
     return new Promise((resolve, reject) => {
       const audio = new Audio(currentSongSrc) as HTMLAudioElement;
       audio.addEventListener("loadedmetadata", () => {
@@ -63,11 +66,11 @@ const Controller = () => {
 
     setIsSongLoading(true);
     setIsSongPlaying(false);
-    fetchAudioDuration().then((duration: any) => {
-      playAudio();
+
+    fetchAudioData().then((duration: any) => {
       setAudioDuration(duration);
       setIsSongLoading(false);
-      setIsSongPlaying(true);
+      playAudio();
       // console.log(duration);
     });
   }, [currentSongSrc]);
@@ -135,6 +138,7 @@ const Controller = () => {
           player={player}
           audioDuration={audioDuration}
           isSongPlaying={isSongPlaying}
+          pauseAudio={pauseAudio}
         />
       </div>
     </React.Fragment>

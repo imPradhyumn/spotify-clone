@@ -38,10 +38,10 @@ const PlayListCard: React.FC<PlayListItemProps> = ({
   );
 
   const playSong = () => {
-    // if (!isLoggedIn) {
-    //   router.push("/login");
-    //   return;
-    // }
+    if (!isLoggedIn) {
+      router.push("/login");
+      return;
+    }
     dispatch(playerActions.setSongSrc(url));
   };
 
@@ -53,9 +53,10 @@ const PlayListCard: React.FC<PlayListItemProps> = ({
       flex
       item-center
       justify-center
-      w-[85%]
+      w-[55%]
+      md:w-[85%]
       max-w-[15rem]
-      min-w-[12rem]
+      min-w-[10rem]
       h-auto
       rounded-lg
       bg-card

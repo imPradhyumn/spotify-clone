@@ -1,18 +1,19 @@
 import React, { useEffect, useRef, useState } from "react";
 import { millisToMinutes } from "@/utilities/millisToMinutes";
 import { mapTimeRangeToPercentage } from "./Controller";
-import { setInterval } from "timers/promises";
 
 interface ProgressBarProps {
   player: HTMLAudioElement | null;
   audioDuration: number;
   isSongPlaying: any;
+  pauseAudio: any;
 }
 
 const ProgressBar: React.FC<ProgressBarProps> = ({
   player,
   audioDuration,
   isSongPlaying,
+  pauseAudio,
 }) => {
   const rangeInputElementRef = useRef<any>(null);
   const progressBarElementRef = useRef<any>(null);
@@ -21,26 +22,57 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
   const onRangeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (player) {
       const progressBarValue = parseInt(e.target.value);
-      player.currentTime = progressBarValue;
+      if (parseInt(e.target.value) >= player.duration) return;
 
+      player.currentTime = progressBarValue;
       const newWidth = mapTimeRangeToPercentage(
         progressBarValue,
-        player?.duration
+        audioDuration
       );
       progressBarElementRef.current.style.width = newWidth + "%";
-      setCurrentAudioTime(player.currentTime);
     }
+  };
+
+  const isSongEnded = function () {
+    if (
+      player &&
+      Math.ceil(player?.currentTime) >= Math.floor(player?.duration)
+    ) {
+      return true;
+    }
+    return false;
+  };
+
+  const resetController = function () {
+    rangeInputElementRef.current.value = 0;
+    progressBarElementRef.current.style.width = 0;
   };
 
   useEffect(() => {
     let interval: number = 0;
-    if (isSongPlaying) {
-      interval = window.setInterval(() => {
+
+    interval = window.setInterval(() => {
+      if (player && isSongPlaying) {
         setCurrentAudioTime((prev) => prev + 1);
-      }, 1000);
-    } else {
-      clearInterval(interval);
-    }
+
+        const progressBarValue = ++rangeInputElementRef.current.value;
+        const newWidth = mapTimeRangeToPercentage(
+          progressBarValue,
+          audioDuration
+        );
+
+        progressBarElementRef.current.style.width = newWidth + "%";
+        setCurrentAudioTime(player.currentTime);
+
+        if (isSongEnded()) {
+          pauseAudio();
+          resetController();
+          setCurrentAudioTime(0);
+        }
+      } else {
+        clearInterval(interval);
+      }
+    }, 1000);
 
     return () => {
       clearInterval(interval);
@@ -48,7 +80,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
   }, [isSongPlaying]);
 
   return (
-    <div className="flex items-center gap-x-2">
+    <div className="flex items-center gap-x-2 w-[85%] md:w-fit">
       <span className="text-xs">{millisToMinutes(currentAudioTime)}</span>
 
       <div className="relative w-[20rem] h-[0.25rem] bg-neutral-700 rounded-2xl">

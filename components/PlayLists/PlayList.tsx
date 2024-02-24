@@ -41,13 +41,13 @@ const PlayList: React.FC<PlayListProps> = ({ children, className, name }) => {
         <h2 className="text-white font-semibold text-2xl">{name}</h2>
         <div
           className="grid
-        grid-rows-3 grid-cols-1
-        gap-y-6
-        md:grid-cols-4
-        md:grid-rows-1
-        max-[1200px]:!grid-cols-3
-        max-[1200px]:!grid-rows-2
-        mt-4"
+          grid-cols-2
+          gap-x-6
+          gap-y-6
+          md:gap-x-0
+          md:grid-cols-4
+          md:grid-rows-1
+          mt-4"
         >
           {isLoading
             ? [1, 2, 3, 4].map((item) => {
