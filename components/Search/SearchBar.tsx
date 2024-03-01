@@ -9,16 +9,20 @@ import {
   setArtistsState,
 } from "@/redux/reducers/searchSlice";
 import axios from "axios";
-import { URL_PREFIX } from "@/constants";
+import { useRouter } from "next/navigation";
 
 const SearchBar = () => {
   const [searchQuery, setSearchQuery] = useState("");
 
   const dispatch = useDispatch();
+  const router = useRouter();
 
   const fetchAndStoreData = async () => {
     const res = await axios.get(
-      `https://spotify-clone-backend-cut9.onrender.com/song/get/${searchQuery}`
+      `https://spotify-clone-backend-cut9.onrender.com/song/get/${searchQuery}`,
+      {
+        withCredentials: false,
+      }
     );
 
     const songsList = res.data;
@@ -33,6 +37,7 @@ const SearchBar = () => {
     dispatch(setSongsState(songsList));
     dispatch(setAlbumsState(albumsList));
     dispatch(setArtistsState(artistsList));
+    router.push(`/search/${searchQuery}`);
   };
 
   function onChange(e: React.ChangeEvent<HTMLInputElement>) {

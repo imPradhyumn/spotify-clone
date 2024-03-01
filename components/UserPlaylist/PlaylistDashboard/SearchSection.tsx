@@ -61,7 +61,10 @@ export default function SearchSection() {
 
   const fetchSongs = async () => {
     const res = await axios.get(
-      `http://localhost:8888/song/get/${searchQuery}`
+      `http://localhost:8888/song/get/${searchQuery}`,
+      {
+        withCredentials: false,
+      }
     );
 
     const songsList = res.data;

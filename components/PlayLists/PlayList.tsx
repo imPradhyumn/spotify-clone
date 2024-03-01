@@ -7,7 +7,6 @@ import PlayListCard from "./PlayListCard";
 import { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import SongCardSkeleton from "../skeletons/SongCardSkeleton/SongCardSkeleton";
-import { URL_PREFIX } from "@/constants";
 
 interface PlayListProps {
   children?: React.ReactNode;
@@ -21,9 +20,9 @@ const PlayList: React.FC<PlayListProps> = ({ children, className, name }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    console.log(process.env.REACT_APP_API_URL);
+    const url = "https://spotify-clone-backend-cut9.onrender.com/song/get/all";
     axios
-      .get(`https://spotify-clone-backend-cut9.onrender.com/song/get/all`)
+      .get(url)
       .then((res) => {
         setSongsList(res.data);
         setIsLoading(false);
@@ -58,7 +57,7 @@ const PlayList: React.FC<PlayListProps> = ({ children, className, name }) => {
                   <PlayListCard
                     key={song.id}
                     title={song.title}
-                    image="img"
+                    image={song.posterPath}
                     url={song.url}
                     artists={song.artists}
                   />

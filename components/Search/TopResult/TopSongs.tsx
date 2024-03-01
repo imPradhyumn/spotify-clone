@@ -10,6 +10,7 @@ import { IArtist } from "@/db/models/ArtistModel";
 import { useDispatch } from "react-redux";
 import { setCurrentSongState } from "@/redux/reducers/currentSongSlice";
 import { Dispatch } from "@reduxjs/toolkit";
+import { POSTER_BASE_URL } from "@/constants";
 
 const renderSongItem = (item: ISong, dispatch: any) => {
   return (
@@ -24,7 +25,7 @@ const renderSongItem = (item: ISong, dispatch: any) => {
         }}
       >
         <img
-          src="/images/lootera.jpg"
+          src={POSTER_BASE_URL + item.posterPath}
           className="w-[3rem] h-[3rem] object-cover py-1"
           alt="song-logo.jpg"
         />
@@ -35,13 +36,14 @@ const renderSongItem = (item: ISong, dispatch: any) => {
           </h3>
 
           <p className="text-sm mt-1 line-clamp-1">
-            {item?.artists?.map((artist: IArtist) => {
+            {item?.artists?.map((artist: IArtist, index: number) => {
               return (
                 <span
-                  key={artist.name}
+                  key={artist.name + index.toString()}
                   className="hover:underline"
                 >
-                  {capitalize(artist.name)}
+                  {capitalize(artist.name) +
+                    (item.artists.length == index + 1 ? "" : ", ")}
                 </span>
               );
             })}

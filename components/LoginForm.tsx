@@ -21,12 +21,12 @@ const LoginForm = () => {
   };
 
   const router = useRouter();
-  const pathName = usePathname();
 
   const authenticateUser = (e: React.MouseEvent) => {
     e.preventDefault();
+    const url = "https://spotify-clone-backend-cut9.onrender.com/user/login";
     axios
-      .post("https://spotify-clone-backend-cut9.onrender.com/user/login", {
+      .post(url, {
         userId: "sarcasmic_billi",
         password: "Anshu1407",
       })

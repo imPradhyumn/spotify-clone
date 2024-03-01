@@ -33,7 +33,10 @@ const Header: React.FC<HeaderProps> = ({ children, className }) => {
   };
 
   return (
-    <div className="sticky top-0 z-[999] h-fit px-5 py-2 mb-4 bg-header-bg rounded-lg">
+    <div
+      className="sticky top-0 z-[999] h-fit
+    px-5 py-2 mb-4 bg-gradient-to-b from-green-900 to-[rgb(23,23,23)] rounded-lg"
+    >
       <div className="w-full flex items-center justify-between">
         <div
           className="hidden

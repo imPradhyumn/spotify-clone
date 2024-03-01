@@ -1,3 +1,4 @@
 export const LOGIN_COOKIE: string = "loginCookie";
-export const URL_PREFIX: string =
-  process.env.API_URL ?? "http://localhost:3000/api";
+
+export const POSTER_BASE_URL =
+  "https://spotify-clone-assets.s3.amazonaws.com/posters";

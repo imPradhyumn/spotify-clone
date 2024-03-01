@@ -8,6 +8,7 @@ import { IArtist } from "@/db/models/ArtistModel";
 import { useDispatch, useSelector } from "react-redux";
 import { playerActions } from "@/redux/reducers/playerSlice";
 import { RootState } from "@/redux/store";
+import { POSTER_BASE_URL } from "@/constants";
 
 interface PlayListItemProps {
   title: string;
@@ -71,9 +72,10 @@ const PlayListCard: React.FC<PlayListItemProps> = ({
 
       <div className="flex flex-col gap-y-3 w-full p-4 rounded-lg">
         <img
-          src="/images/lootera.jpg"
+          src={POSTER_BASE_URL + image}
           alt="album-img"
           className="w-full h-[11rem] rounded-lg object-cover"
+          loading="lazy"
         />
         <div>
           <h3 className="text-lg font-bold truncate">{capitalize(title)}</h3>
