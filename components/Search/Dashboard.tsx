@@ -26,7 +26,7 @@ const Dashboard = () => {
   return (
     <div className="bg-search-dashboard px-6 py-5">
       <h1 className="text-xl font-bold mb-5">Browse all</h1>
-      <div className="flex gap-8 flex-wrap">
+      <div className="flex gap-4 md:gap-8 flex-wrap">
         {searchCardsTitle.map((title: string, index: number) => {
           return (
             <SearchCard

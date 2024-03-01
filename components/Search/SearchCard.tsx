@@ -9,12 +9,10 @@ interface SearchCardProps {
 const SearchCard: React.FC<SearchCardProps> = ({ title, bgColor }) => {
   return (
     <div
-      className={
-        "w-[12rem] h-[12rem] rounded-lg justify-center cursor-pointer" +
-        ` bg-green-500`
-      }
+      className="w-[6rem] h-[6rem] md:w-[12rem] md:h-[12rem]
+      rounded-lg cursor-pointer bg-green-500"
     >
-      <h1 className="p-3 font-bold text-lg">{capitalize(title)}</h1>
+      <h1 className="p-3 font-bold md:text-lg">{capitalize(title)}</h1>
     </div>
   );
 };

@@ -49,7 +49,11 @@ const SearchBar = () => {
   }
 
   return (
-    <div className="focus-within:outline outline-white outline-2 flex items-center gap-x-2 w-5/6 bg-search-bg p-3 ml-2 rounded-full">
+    <div
+      className="hidden focus-within:outline outline-white
+    outline-2 md:flex items-center gap-x-2
+    w-5/6 bg-search-bg p-3 ml-2 rounded-full"
+    >
       <BiSearch size={22} />
       <input
         className="w-full border-none outline-none bg-transparent text-sm font-medium text-white placeholder-shown:text-search-text"

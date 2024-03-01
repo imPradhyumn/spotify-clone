@@ -12,12 +12,12 @@ const Tags = () => {
   ];
 
   return (
-    <div className="flex gap-x-4">
+    <div className="flex gap-x-4 flex-wrap gap-y-2">
       {tags.map((tag) => {
         return (
           <Button
-            className="bg-search-bg px-3
-            py-2 font-medium
+            className="bg-search-bg py-1 px-3
+            md:py-2 font-medium
             text-sm text-white
             focus:bg-white
             focus:text-black
