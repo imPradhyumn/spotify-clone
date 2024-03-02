@@ -5,7 +5,7 @@ import SideBar from "@/components/SideSection/SideBar";
 import PlaylistDashboard from "@/components/UserPlaylist/PlaylistDashboard/PlaylistDashboard";
 import { useParams } from "next/navigation";
 
-const page = () => {
+const Page = () => {
   const slugs = useParams();
 
   let playlistName: string = slugs.slug ? slugs.slug[0] : "liked songs";
@@ -19,4 +19,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
