@@ -1,8 +1,6 @@
 import Button from "@/components/common/Button";
 import React from "react";
-import LibraryItem from "../LibraryItem";
 import UserPlaylists from "./UserPlaylists";
-import { logoShapes } from "../LibraryItem";
 
 export default function UserLibrary() {
   return (
@@ -29,11 +27,8 @@ export default function UserLibrary() {
       >
         Artists
       </Button>
-      <LibraryItem
-        name="Liked Songs"
-        type="Playlist"
-        logoShape={logoShapes.SQAURE}
-      />
+
+      {/* if logged in */}
       <UserPlaylists />
     </div>
   );

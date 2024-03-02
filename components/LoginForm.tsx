@@ -5,7 +5,7 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { setAuthState } from "@/redux/reducers/authSlice";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 const LoginForm = () => {
   const dispatch = useDispatch();
@@ -24,37 +24,19 @@ const LoginForm = () => {
 
   const authenticateUser = (e: React.MouseEvent) => {
     e.preventDefault();
-    const url = "https://spotify-clone-backend-cut9.onrender.com/user/login";
+    const url = "http://localhost:8888/user/login";
     axios
       .post(url, {
         userId: "sarcasmic_billi",
         password: "Anshu1407",
       })
       .then((res) => {
-        console.log(res);
-        if (res.status !== 200) {
-          alert("Wrong credentials");
-          return;
-        }
-        dispatch(setAuthState(true));
+        // console.log("Hello", res);
+        res.data["isAuthenticated"] = true;
+        dispatch(setAuthState(res.data));
         router.push("/");
       })
       .catch((err) => console.log("Axios Err: ", err));
-  };
-
-  const signUp = (e: any) => {
-    e.preventDefault();
-    axios
-      .post("https://spotify-clone-backend-cut9.onrender.com/user/signup", {
-        firstName: "Anshika",
-        lastName: "Maheshwari",
-        email: "pyara_panda@gmail.com",
-        password: "Anshu1407",
-        userName: "sarcasmic_billi",
-        playlist: null,
-      })
-      .then((res) => console.log("Signup Api Res: ", res))
-      .catch((err) => console.log("Axios Error: ", err));
   };
 
   return (
@@ -114,9 +96,9 @@ const LoginForm = () => {
           </form>
           <hr className="bg-white w-4/5 my-5"></hr>
           <p>
-            {"Don't have an account?"}
+            {"Don't have an account? "}
             <Link
-              href="#"
+              href="/signup"
               className="underline font-semibold"
             >
               Sign up for Spotify

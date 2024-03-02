@@ -1,40 +1,44 @@
 "use client";
 
 import Button from "@/components/common/Button";
+import { POSTER_BASE_URL } from "@/constants";
 import {
   setAlbumsState,
   setArtistsState,
   setSongsState,
 } from "@/redux/reducers/searchSlice";
 import { RootState } from "@/redux/store";
+import { capitalize } from "@/utilities/captitalize";
 import axios from "axios";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 const renderSearchedSongs = (song: any) => {
-  console.log(song);
+  // console.log(song);
   return (
     <div
-      className="flex flex-row w-full
-  justify-between items-center mt-2 pl-2 pr-10
-  h-12 cursor-default hover:bg-[rgb(43,43,43)]"
+      className="flex justify-between
+      md:grid md:grid-cols-3 w-full
+      items-center mt-2 pl-2 pr-10
+      h-12 cursor-default hover:bg-[rgb(43,43,43)]"
     >
-      <div className="flex flex-row gap-x-4 h-full">
+      <div className="flex flex-row gap-x-4 h-full items-center">
         <img
-          src="#"
-          className="h-full w-12 border-2"
+          src={POSTER_BASE_URL + song.posterPath}
+          className="w-10 h-10 md:w-12 md:h-full border-2"
           alt="song-logo"
         />
-        <div>
-          <p>Tera hone laga hoon</p>
-          <p>Arijit Singh</p>
-        </div>
+
+        <p>{capitalize(song.title)}</p>
+        {song.artists.map((artist: any) => {
+          <p>{capitalize(artist.name)}</p>;
+        })}
       </div>
-      <p className="w-1/4 overflow-ellipsis overflow-hidden whitespace-nowrap">
-        Azab prem ki gazab kahani
+      <p className="w-1/2 overflow-ellipsis overflow-hidden whitespace-nowrap hidden md:block">
+        {capitalize(song.album.name)}
       </p>
       <Button
-        className="bg-transparent px-3 ml-3
+        className="bg-transparent px-3 ml-3 w-fit
           py-1 font-medium border-white border-2
           text-sm text-white
           focus:bg-white
@@ -61,7 +65,7 @@ export default function SearchSection() {
 
   const fetchSongs = async () => {
     const res = await axios.get(
-      `http://localhost:8888/song/get/${searchQuery}`,
+      `https://spotify-clone-backend-cut9.onrender.com/song/get/${searchQuery}`,
       {
         withCredentials: false,
       }

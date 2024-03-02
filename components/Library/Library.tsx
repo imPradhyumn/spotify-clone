@@ -1,7 +1,9 @@
+import { RootState } from "@/redux/store";
 import React, { useState } from "react";
 
 import { HiPlus } from "react-icons/hi";
 import { TbPlaylist } from "react-icons/tb";
+import { useSelector } from "react-redux";
 import AddPodcasts from "./AddPodcasts";
 import UserLibrary from "./AuthenticatedUser/UserLibrary";
 import CreatePlayList from "./CreatePlayList";
@@ -30,7 +32,9 @@ const Library = () => {
     setIsDialogOpen((prev) => !prev);
   };
 
-  const isLoggedIn = true;
+  const isLoggedIn = useSelector(
+    (state: RootState) => state.auth.isAuthenticated
+  );
 
   return (
     <div className="flex flex-col">

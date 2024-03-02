@@ -2,19 +2,23 @@
 
 import { configureStore } from "@reduxjs/toolkit";
 import { authReducer } from "./reducers/authSlice";
-import { currentSongReducer } from "./reducers/currentSongSlice";
 import { playerReducer } from "./reducers/playerSlice";
 import { searchReducer } from "./reducers/searchSlice";
+import { userPlaylistReducer } from "./reducers/userplaylist";
 
 const store = configureStore({
   reducer: {
     auth: authReducer,
     search: searchReducer,
     player: playerReducer,
+    userPlaylist: userPlaylistReducer,
   },
   preloadedState: {
     auth: {
       isAuthenticated: false,
+    },
+    userPlaylist: {
+      userPlaylists: [],
     },
   },
   devTools: true,
