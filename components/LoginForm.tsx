@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { setAuthState } from "@/redux/reducers/authSlice";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { XHR_URL } from "@/constants";
 
 const LoginForm = () => {
   const dispatch = useDispatch();
@@ -24,7 +25,7 @@ const LoginForm = () => {
 
   const authenticateUser = (e: React.MouseEvent) => {
     e.preventDefault();
-    const url = "http://localhost:8888/user/login";
+    const url = XHR_URL + "/user/login";
     axios
       .post(url, {
         userId: "sarcasmic_billi",

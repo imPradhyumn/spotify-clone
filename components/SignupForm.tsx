@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { capitalize } from "@/utilities/captitalize";
+import { XHR_URL } from "@/constants";
 
 const SignupForm = () => {
   const [userData, setUserData] = useState({
@@ -54,7 +55,7 @@ const SignupForm = () => {
     if (validateUserData() === false) return;
 
     axios
-      .post("http://localhost:8888/user/signup", userData, {
+      .post(XHR_URL + "/user/signup", userData, {
         withCredentials: false,
       })
       .then((res) => {

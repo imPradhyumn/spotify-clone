@@ -18,9 +18,12 @@ export default function UserPlaylists() {
   );
 
   const fetchUserPlaylists = async () => {
-    const res = await axios.get(`http://localhost:8888/user/get-playlist/6`, {
-      withCredentials: false,
-    });
+    const res = await axios.get(
+      `${XHR_URL}/user/get-playlist/${userAuthState.userUniqueId}`,
+      {
+        withCredentials: false,
+      }
+    );
     if (res.data) {
       dispatch(setUserPlaylistState(res.data));
     }
