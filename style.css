@@ -1,0 +1,222 @@
+* {
+    padding: 0px;
+    margin: 0px;
+}
+
+.header {
+    display: flex;
+    padding: 10px 20px;
+    justify-content: space-between;
+}
+
+.logo {
+    padding: 10px 20px;
+}
+
+.nav {
+    display: flex;
+}
+
+.nav1 a {
+    letter-spacing: 3px;
+    text-decoration: none;
+    color: black;
+    font-size: medium;
+    padding: 10px 20px;
+}
+
+.a1 {
+    font-size: medium;
+    font-weight: bolder;
+    word-spacing: 5px;
+    padding: 10px;
+    letter-spacing: 5px;
+    color: black;
+}
+
+.logo {
+    letter-spacing: 5px;
+    color: black;
+}
+
+.logo:hover {
+    background-color: grey;
+}
+
+.nav1:hover {
+    background-color: grey;
+}
+
+.nav1 {
+    padding: 10px 20px;
+} 
+
+.a2 img {
+    width: 100%;
+    height: 716.27px;
+
+}
+
+.a3 {
+    padding: 80px 25px;
+    font-weight: 100;
+    border-bottom: 0.5px solid rgb(225, 219, 219);
+    padding-bottom: 10px;
+    padding-left: 35px;
+}
+
+.a4 {
+    display: flex;
+    padding-left:20px;
+    padding-bottom:0.5px;
+    padding-top:40px;
+}
+
+.a5 {
+    width: 307px;
+    height: 204px;
+    margin: 10px;
+} 
+.a5 img{
+    height:100%;
+    width:100%;
+}
+.container{
+    position: relative;
+}
+
+.br1{
+font-weight: bolder;
+background-color: black;
+background-blend-mode:lighten
+}
+.a2{
+    position: relative;
+
+}
+.text{
+    position:absolute;
+    top:50%;
+    left:42%;
+    color: white;
+    font-family: "Inria Serif", serif;
+    letter-spacing: 5PX;
+    font-size: 36px;
+}
+
+.summer{
+    position: absolute;
+    background-color: black;
+    z-index: 1;
+    color:white;
+    top:0px;
+    font-size:18px;
+    padding:8px 6px;
+    font-family: "Inria Serif", serif;
+}
+.a5{
+    position: relative;
+}
+.brick{
+    position: absolute;
+    background-color: black;
+    z-index: 1;
+    color:white;
+    top:0px;
+    font-size:18px;
+    padding:8px 6px;
+    font-family: "Inria Serif", serif;
+}
+.renovated{
+    position: absolute;
+    background-color: black;
+    z-index: 1;
+    color:white;
+    top:0px;
+    font-size:18px;
+    padding:8px 7px;
+    font-family: "Inria Serif", serif;
+}
+.barn{
+    position: absolute;
+    background-color: black;
+    z-index: 1;
+    color:white;
+    top:0px;
+    font-size:18px;
+    padding:8px 6px;
+    font-family: "Inria Serif", serif;
+}
+.a6{
+    display: flex;
+    padding:0px 20px;
+    padding-bottom: 40px;;
+
+}
+.a7 img{
+    width:100%;
+    height:100%;
+
+}
+.a7{
+    width: 307px;
+    height: 204px;
+    margin: 10px;
+    position: relative;
+    padding-top: 0px;
+
+}
+.house{
+    position: absolute;
+    background-color: black;
+    z-index: 1;
+    color:white;
+    top:0px;
+    font-size:18px;
+    padding:8px 6px;
+    font-family: "Inria Serif", serif;
+}
+.ck{
+    position: absolute;
+    background-color: black;
+    z-index: 1;
+    color:white;
+    top:0px;
+    font-size:18px;
+    padding:8px 6px;
+    font-family: "Inria Serif", serif;
+}
+.re{
+    position: absolute;
+    background-color: black;
+    z-index: 1;
+    color:white;
+    top:0px;
+    font-size:18px;
+    padding:8px 6px;
+    font-family: "Inria Serif", serif;
+}
+.ba{
+    position: absolute;
+    background-color: black;
+    z-index: 1;
+    color:white;
+    top:0px;
+    font-size:18px;
+    padding:8px 6px;
+    font-family: "Inria Serif", serif;
+}
+.about{
+    padding: 80px 25px;
+    border-bottom: 0.5px solid rgb(225, 219, 219);
+    padding-left: 35px;
+    padding-top:10px;
+    font-weight: lighter;
+    padding-bottom: 5px;
+}
+.p{
+    padding:10px 20px;
+    font-size:large;
+    font-family: "Inria Serif", serif;
+    font-weight:500;
+}
