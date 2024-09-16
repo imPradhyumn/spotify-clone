@@ -28,7 +28,7 @@ const LoginForm = () => {
     const url = XHR_URL + "/user/login";
     axios
       .post(url, {
-        userId: "imPradhyumn",
+        userId: "impradhyumn",
         password: "12345",
       })
       .then((res) => {
