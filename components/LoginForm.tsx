@@ -28,8 +28,8 @@ const LoginForm = () => {
     const url = XHR_URL + "/user/login";
     axios
       .post(url, {
-        userId: "sarcasmic_billi",
-        password: "Anshu1407",
+        userId: "imPradhyumn",
+        password: "12345",
       })
       .then((res) => {
         // console.log("Hello", res);
@@ -65,7 +65,7 @@ const LoginForm = () => {
                 name="email"
                 placeholder="Email or username"
                 onChange={handleInputChange}
-                value={userCredentials.email}
+                value={userCredentials.email || 'imPradhyumn'}
               />
             </div>
 
@@ -83,7 +83,7 @@ const LoginForm = () => {
                 name="password"
                 placeholder="Password"
                 onChange={handleInputChange}
-                value={userCredentials.password}
+                value={userCredentials.password || '12345'}
                 autoComplete="on"
               />
             </div>
